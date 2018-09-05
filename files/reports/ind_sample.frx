@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE root [
+<!ENTITY nbsp "&#160;">
+]>
+<html xmlns:frx="urn:FrxReports">
+<head>
+<title>Sample details</title>
+<frx:category>Aen</frx:category>
+<frx:options/>
+<frx:parameters>
+  <frx:parm id="eventid" label="Event ID" require="1" desc="The UUID of the sample " type="textfield"/>
+</frx:parameters>
+<frx:docgen>
+  <frx:doc type="csv"/>
+</frx:docgen>
+<frx:fields>
+
+  <frx:field id="eventid" link="reports/ind_sample?eventid={eventid}"/>
+
+  <frx:field id="parenteventid" link="reports/ind_sample?eventid={parenteventid}"/>
+
+  <frx:field id="sampletype" link="reports/aen_multi?sampletype={sampletype}"/>
+
+  <frx:field id="geartype" link="reports/aen_multi?geartype={geartype}"/>
+
+  <frx:field id="stationname" link="reports/aen_multi?stationname={stationname}"/>
+  <frx:field id="cruisenumber" link="reports/aen_multi?cruisenumber={cruisenumber}"/>
+
+  <frx:field id="eventdate" link="reports/aen_multi?startdate={eventdate}&amp;enddate={eventdate}"/>
+
+
+
+
+
+  <frx:field id="metadata" format="xhtml"/>
+</frx:fields>
+<frx:menu/>
+<frx:cache/>
+<style/>
+</head>
+<body>
+<div id="search_eventID" class="FrxFieldTable" frx:block="AeN/search_eventID" frx:foreach="*">    
+    <table>
+      <tbody>
+        <tr>
+          <th>Event ID</th>
+          <td>{eventid}</td></tr></tbody>
+      <tbody>
+        <tr>
+          <th>Parent Event ID</th>
+          <td>{parenteventid}</td></tr></tbody>
+      <tbody>
+        <tr>
+          <th>Cruise Number</th>
+          <td>{cruisenumber}</td></tr></tbody>
+      <tbody>
+        <tr>
+          <th>Station Name</th>
+          <td>{stationname}</td></tr></tbody>
+      <tbody>
+        <tr>
+          <th>Event Time</th>
+          <td>{eventtime}</td></tr></tbody>
+      <tbody>
+        <tr>
+          <th>Event Date</th>
+          <td>{eventdate}</td></tr></tbody>
+      <tbody>
+        <tr>
+          <th>Decimal Latitude</th>
+          <td>{decimallatitude}</td></tr></tbody>
+      <tbody>
+        <tr>
+          <th>Decimal Longitude</th>
+          <td>{decimallongitude}</td></tr></tbody>
+      <tbody>
+        <tr>
+          <th>Sample Type</th>
+          <td>{sampletype}</td></tr></tbody>
+      <tbody>
+        <tr>
+          <th>Gear Type</th>
+          <td>{geartype}</td></tr></tbody>
+      <tbody>
+        <tr>
+          <th>Sample Depth (m)</th>
+          <td>{sampledepthinmeters}</td></tr></tbody>
+      <tbody>
+        <tr>
+          <th>Bottom Depth (m)</th>
+          <td>{bottomdepthinmeters}</td></tr></tbody>
+      <tbody>
+        <tr>
+          <th>Niskin Bottle Number</th>
+          <td>{bottlenumber}</td></tr></tbody>
+      <tbody>
+        <tr>
+          <th>Sampling protocol</th>
+          <td>{samplingprotocol}</td></tr></tbody>
+      <tbody>
+        <tr>
+          <th>Sample Location</th>
+          <td>{samplelocation}</td></tr></tbody>
+      <tbody>
+        <tr>
+          <th>PI name</th>
+          <td>{pi_name}</td></tr></tbody>
+      <tbody>
+        <tr>
+          <th>PI e-mail</th>
+          <td>{pi_email}</td></tr></tbody>
+      <tbody>
+        <tr>
+          <th>PI insitution</th>
+          <td>{pi_institution}</td></tr></tbody>
+      <tbody>
+        <tr>
+          <th>Recorded By</th>
+          <td>{recordedby}</td></tr></tbody>
+      <tbody>
+        <tr>
+          <th>Event Remarks</th>
+          <td>{eventremarks}</td></tr></tbody>
+      <tbody>
+        <tr>
+          <th>Other Information</th>
+          <td>{other_form}</td></tr></tbody>
+      <tbody>
+        <tr>
+          <th>Metadata</th>
+          <td>{metadata_form}</td></tr></tbody></table></div></body>
+</html>

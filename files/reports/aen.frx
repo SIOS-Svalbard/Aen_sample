@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE root [
+<!ENTITY nbsp "&#160;">
+]>
+<html xmlns:frx="urn:FrxReports">
+<head>
+<title>AeN sample log</title>
+<frx:category>Aen</frx:category>
+<frx:options/>
+<frx:parameters>
+</frx:parameters>
+<frx:docgen>
+  <frx:doc type="csv"/>
+</frx:docgen>
+<frx:fields>
+
+  <frx:field id="eventid" link="reports/ind_sample?eventid={eventid}"/>
+
+  <frx:field id="parenteventid" link="reports/ind_sample?eventid={pareteventid}"/>
+
+  <frx:field id="sampletype" link="reports/aen_multi?sampletype={sampletype}"/>
+
+  <frx:field id="geartype" link="reports/aen_multi?geartype={geartype}"/>
+
+  <frx:field id="stationname" link="reports/aen_multi?stationname={stationname}"/>
+
+  <frx:field id="eventdate" link="reports/aen_multi?startdate={eventdate}&amp;enddate={eventdate}"/>
+
+
+
+</frx:fields>
+<frx:menu/>
+<frx:cache/>
+<style/>
+</head>
+<body>
+<div id="get_all_block" class="FrxTable" frx:block="AeN/get_all">
+    <table>
+      <thead>
+        <tr>
+          <th>Event Date</th>
+          <th>Station Name</th>
+          <th>Gear Type</th>
+          <th>Sample Type</th>
+          <th>Event ID</th>
+          <th>Parent Event ID</th></tr></thead>
+      <tbody>
+        <tr id="get_all" frx:foreach="*">
+          <td>{eventdate}</td>
+          <td>{stationname}</td>
+          <td>{geartype}</td>
+          <td>{sampletype}</td>
+          <td>{eventid}</td>
+          <td>{parenteventid}</td></tr></tbody></table></div></body>
+</html>
