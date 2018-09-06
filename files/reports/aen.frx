@@ -6,7 +6,7 @@
 <head>
 <title>AeN sample log</title>
 <frx:category>Aen</frx:category>
-<frx:options/>
+<frx:options input_format="full_html" skin="datatable"/>
 <frx:parameters>
 </frx:parameters>
 <frx:docgen>
