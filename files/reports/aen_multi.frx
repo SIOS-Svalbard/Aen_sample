@@ -6,15 +6,15 @@
 <head>
 <title>Samples from multiple</title>
 <frx:category>Aen</frx:category>
-<frx:options/>
+<frx:options input_format="full_html" skin="datatable"/>
 <frx:parameters>
   <frx:parm id="startdate" label="Start date" type="date_select" options="date_year_range='-10:0'">2018-01-01</frx:parm>
   <frx:parm id="enddate" label="End Date" type="date_select" options="date_year_range='-10:0'">today</frx:parm>
-  <frx:parm id="stationname" label="Station Name" desc="The name of the station" data_source="AeN/unique_stations" data_field="stationname" type="select">%</frx:parm>
-  <frx:parm id="geartype" label="Gear Type">%</frx:parm>
-  <frx:parm id="sampletype" label="Sample Type">%</frx:parm>
-  <frx:parm id="cruisenumber" label="Cruise Number" data_source="AeN/unique_cruise" data_field="cruisenumber" type="select">%</frx:parm>
-  <frx:parm id="parenteventid" label="Parent Event ID">%</frx:parm>
+  <frx:parm id="stationname" label="Station Name" desc="The name of the station" data_source="AeN/unique_stations" data_field="stationname" type="select"></frx:parm>
+  <frx:parm id="geartype" label="Gear Type"></frx:parm>
+  <frx:parm id="sampletype" label="Sample Type"></frx:parm>
+  <frx:parm id="cruisenumber" label="Cruise Number" data_source="AeN/unique_cruise" data_field="cruisenumber" type="select"></frx:parm>
+  <frx:parm id="parenteventid" label="Parent Event ID"></frx:parm>
 </frx:parameters>
 <frx:docgen>
   <frx:doc type="csv"/>
