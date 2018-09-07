@@ -10,7 +10,8 @@ description = Skin used in customized reports.
 ;
 ; Make the dataTables plugin available:
 ;
-scripts[] = dataTables/media/js/jquery.dataTables.min.js
+; scripts[] = dataTables/media/js/jquery.dataTables.min.js
+scripts[] = https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js
 ;
 ; Use (enable) some dataTables features (by specifying so in a custom JS file):
 ; 
