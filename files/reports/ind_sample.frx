@@ -5,7 +5,7 @@
 <html xmlns:frx="urn:FrxReports">
 <head>
 <title>Sample details</title>
-<frx:category>Aen</frx:category> <frx:options/>
+<frx:category>Aen</frx:category> <frx:options input_format="full_html" skin="map"/>
 <frx:parameters>
   <frx:parm id="eventid"/>
 
@@ -39,7 +39,57 @@
 <style/>
 </head>
 <body>
+    <div id="map" class="map"></div>
 <div id="search_eventID" class="FrxFieldTable" frx:block="AeN/search_eventID" frx:foreach="*">    
+    <script type="text/javascript">
+      proj4.defs('EPSG:3413','+proj=stere +lat_0=90 +lat_ts=70 +lon_0=-45 +k=1 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs')
+      ol.proj.proj4.register(proj4);
+      var proj3413 = new ol.proj.get('EPSG:3413');
+      proj3413.setExtent([-4194304, -4194304, 4194304, 4194304]);
+      var map = new ol.Map({
+        target: 'map',
+        layers: [
+          new ol.layer.Tile({
+          source: new ol.source.TileWMS({
+          attributions: 'Imagery reproduced from the GEBCO_2014 Grid, version 20150318, <a href="https://www.gebco.net">www.gbaco.net</a>',
+          params: {
+          'LAYERS' : 'GEBCO_NORTH_POLAR_VIEW'},
+          projection: 'EPSG:3413',
+          url: 'https://www.gebco.net/data_and_products/gebco_web_services/north_polar_view_wms/mapserv?'
+})
+         })
+        ],
+        view: new ol.View({
+            center: ol.proj.fromLonLat([{decimallongitude}, {decimallatitude}], proj3413),
+          projection: proj3413,
+          zoom: 4,
+          rotation: 1.05
+        })
+      });
+var marker = new ol.Feature({
+/*geometry: new ol.geom.Circle( ol.proj.fromLonLat([{decimallongitude}, {decimallatitude}],proj3413)),
+*/geometry: new ol.geom.Circle(
+ol.proj.fromLonLat([{decimallongitude}, {decimallatitude}],proj3413), 5000
+)
+});
+marker.setStyle(
+new ol.style.Style({
+          fill: new ol.style.Fill({
+          color: [255,148,148,1]}),
+          stroke: new ol.style.Stroke({
+          color: [255,0,0,1],
+          width: 2
+          })
+    })
+)
+var vectorSource = new ol.source.Vector({
+  features: [marker]
+});
+var markerVectorLayer = new ol.layer.Vector({
+  source: vectorSource
+});
+map.addLayer(markerVectorLayer);
+</script>
     <table>
       <tbody>
         <tr>
