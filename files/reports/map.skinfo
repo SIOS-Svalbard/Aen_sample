@@ -11,6 +11,7 @@ description = Skin used for map.
 ; Make the openlayers plugin available:
 ;
 ; scripts[] = http://openlayers.org/api/OpenLayers.js
+scripts[] = https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js
 scripts[] = https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.2.0/build/ol.js
 scripts[] = https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.5.0/proj4-src.js 
 ;

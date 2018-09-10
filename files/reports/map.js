@@ -49,3 +49,19 @@ var map = new ol.Map({
 });*/
 
 
+(function ($) {
+  Drupal.behaviors.ForenaDatatablesFeatures = {
+    attach: function (context, settings) {
+      //See http://www.datatables.net for documentation
+      $('.sort table').dataTable({
+        "stateSave": true,
+        "sDom": '<"top"><"bottom"><"clear">',
+        "iDisplayLength": -1,
+        "bSort": true,
+        "ordering": true,
+        "order":[[0,"desc"]] 
+        });
+    }
+  };
+
+})(jQuery);
