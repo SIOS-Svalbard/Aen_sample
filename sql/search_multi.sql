@@ -1,7 +1,11 @@
 --ACCESS=access content
 select eventdate, stationname, geartype, sampletype, eventID, parenteventID from aen
-	where eventdate between :startdate AND  :enddate AND
-	CASE when :stationname is not NULL THEN stationname LIKE :stationname
+	where
+    CASE when :startdate is not NULL THEN eventdate between :startdate AND  :enddate
+    ELSE TRUE
+    END
+    AND
+	CASE when :stationname is not NULL THEN stationname LIKE concat('%', :stationname ,'%')
     ELSE TRUE
     END
     AND

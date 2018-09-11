@@ -22,7 +22,7 @@
 
   <frx:field id="geartype" link="reports/aen_multi?geartype={geartype}"/>
 
-  <frx:field id="stationname" link="reports/aen_multi?stationname={stationname}"/>
+  <frx:field id="stationname" link="reports/aen_station?stationname={stationname}"/>
 
   <frx:field id="eventdate" link="reports/aen_multi?startdate={eventdate}&amp;enddate={eventdate}"/>
 
@@ -34,22 +34,55 @@
 <style/>
 </head>
 <body>
-<div id="get_all_block" class="FrxTable" frx:block="AeN/get_all">
+<div id="get_all_block" class="FrxTable FrxTable nowrap" frx:block="AeN/get_all">    
+    
     <table>
       <thead>
         <tr>
           <th>Event Date</th>
+          <th>Event Time</th>
+          <th>Cruise Number</th>
           <th>Station Name</th>
           <th>Gear Type</th>
           <th>Sample Type</th>
           <th>Event ID</th>
-          <th>Parent Event ID</th></tr></thead>
+          <th>Parent Event ID</th>
+          <th>Decimal Latitude</th>
+          <th>Decimal Longitude</th>
+          <th>Sample Depth (m)</th>
+          <th>Bottom Depth (m)</th>
+          <th>Niskin Bottle Number</th>
+          <th>Sampling protocol</th>
+          <th>Sample Location</th>
+          <th>PI name</th>
+          <th>PI e-mail</th>
+          <th>PI insitution</th>
+          <th>Recorded By</th>
+          <th>Event Remarks</th>
+          <th>Other information</th>
+          <th>Metadata</th></tr></thead>
       <tbody>
         <tr id="get_all" frx:foreach="*">
           <td>{eventdate}</td>
+          <td>{eventtime}</td>
+          <td>{cruisenumber}</td>
           <td>{stationname}</td>
           <td>{geartype}</td>
           <td>{sampletype}</td>
           <td>{eventid}</td>
-          <td>{parenteventid}</td></tr></tbody></table></div></body>
+          <td>{parenteventid}</td>
+          <td>{decimallatitude}</td>
+          <td>{decimallongitude}</td>
+          <td>{sampledepthinmeters}</td>
+          <td>{bottomdepthinmeters}</td>
+          <td>{bottlenumber}</td>
+          <td>{samplingprotocol}</td>
+          <td>{samplelocation}</td>
+          <td>{pi_name}</td>
+          <td>{pi_email}</td>
+          <td>{pi_institution}</td>
+          <td>{recordedby}</td>
+          <td>{eventremarks}</td>
+          <td>{other}</td>
+          <td>{metadata}</td></tr></tbody></table></div></body>
 </html>

@@ -1,3 +1,3 @@
 --ACCESS=access content
-select eventdate, stationname, geartype, sampletype, eventID, parenteventID from aen
+select * from aen
 	order by eventdate, geartype, sampletype;
