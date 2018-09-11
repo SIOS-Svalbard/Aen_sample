@@ -4,7 +4,7 @@
 ]>
 <html xmlns:frx="urn:FrxReports">
 <head>
-<title>Samples from multiple</title>
+<title>Samples from filter</title>
 <frx:category>Aen</frx:category>
 <frx:options input_format="full_html" skin="datatable"/>
 <frx:parameters>
