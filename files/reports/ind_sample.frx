@@ -23,7 +23,7 @@
 
   <frx:field id="geartype" link="reports/aen_multi?geartype={geartype}"/>
 
-  <frx:field id="stationname" link="reports/aen_multi?stationname={stationname}"/>
+  <frx:field id="stationname" link="reports/aen_station?stationname={stationname}"/>
   <frx:field id="cruisenumber" link="reports/aen_multi?cruisenumber={cruisenumber}"/>
 
   <frx:field id="eventdate" link="reports/aen_multi?startdate={eventdate}&amp;enddate={eventdate}"/>
