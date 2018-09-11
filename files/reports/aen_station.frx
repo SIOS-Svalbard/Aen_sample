@@ -4,35 +4,107 @@
 ]>
 <html xmlns:frx="urn:FrxReports">
 <head>
-<title>Samples from station</title>
-<frx:category>Aen</frx:category>
-<frx:options/>
+    <title>Station details</title>
+<frx:category>Aen</frx:category> <frx:options input_format="full_html" skin="map"/>
 <frx:parameters>
-  <frx:parm id="stationname" label="Station Name" require="1" desc="The name of the station" data_source="AeN/unique_stations" data_field="stationname" type="select" />
+  <frx:parm id="stationname" label="Station Name" desc="The name of the station" data_source="AeN/unique_stations" data_field="stationname" type="select"></frx:parm>
+
 </frx:parameters>
 <frx:docgen>
   <frx:doc type="csv"/>
 </frx:docgen>
 <frx:fields>
 
-  <frx:field id="eventid" link="reports/ind_sample/?eventid={eventid}"/>
+  <frx:field id="eventid" link="reports/ind_sample?eventid={eventid}"/>
 
-  <frx:field id="parenteventid" link="reports/ind_sample/?eventid={pareteventid}"/>
+  <frx:field id="parenteventid" link="reports/ind_sample?eventid={parenteventid}"/>
 
-  <frx:field id="sampletype" link="reports/aen_sampletype/?sampletype={sampletype}"/>
+  <frx:field id="sampletype" link="reports/aen_multi?sampletype={sampletype}"/>
 
-  <frx:field id="geartype" link="reports/aen_gear/?geartype={geartype}"/>
+  <frx:field id="geartype" link="reports/aen_multi?geartype={geartype}"/>
 
-  <frx:field id="stationname" link="reports/aen_station/?stationname={stationname}"/>
+  <frx:field id="stationname" link="reports/aen_station?stationname={stationname}"/>
+  <frx:field id="cruisenumber" link="reports/aen_multi?cruisenumber={cruisenumber}"/>
 
-  <frx:field id="eventdate" link="reports/aen_date/?eventdate=&quot;{eventdate}&quot;"/>
+  <frx:field id="eventdate" link="reports/aen_multi?startdate={eventdate}&amp;enddate={eventdate}"/>
+  <frx:field id="info" />
+
+  <frx:field id="metadata" format="xhtml"/>
 </frx:fields>
 <frx:menu/>
 <frx:cache/>
 <style/>
 </head>
 <body>
-<div id="search_station_block" class="FrxTable" frx:block="AeN/search_station">
+<h1>Station {parm.stationname}</h1>
+    <div id="map" class="map"></div>
+<div id="search_station" class="FrxFieldTable" frx:block="AeN/search_station" frx:foreach="*">    
+    <script type="text/javascript">
+      proj4.defs('EPSG:3413','+proj=stere +lat_0=90 +lat_ts=70 +lon_0=-45 +k=1 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs')
+      ol.proj.proj4.register(proj4);
+      var proj3413 = new ol.proj.get('EPSG:3413');
+      proj3413.setExtent([-4194304, -4194304, 4194304, 4194304]);
+      var map = new ol.Map({
+        target: 'map',
+        layers: [
+          new ol.layer.Tile({
+          source: new ol.source.TileWMS({
+          attributions: 'Imagery reproduced from the GEBCO_2014 Grid, version 20150318, <a href="https://www.gebco.net">www.gbaco.net</a>',
+          params: {
+          'LAYERS' : 'GEBCO_NORTH_POLAR_VIEW'},
+          projection: 'EPSG:3413',
+          url: 'https://www.gebco.net/data_and_products/gebco_web_services/north_polar_view_wms/mapserv?'
+})
+         })
+        ],
+        view: new ol.View({
+            center: ol.proj.fromLonLat([{decimallongitude}, {decimallatitude}], proj3413),
+          projection: proj3413,
+          zoom: 4,
+          rotation: 1.05
+        })
+      });
+var marker = new ol.Feature({
+/*geometry: new ol.geom.Circle( ol.proj.fromLonLat([{decimallongitude}, {decimallatitude}],proj3413)),
+*/geometry: new ol.geom.Circle(
+ol.proj.fromLonLat([{decimallongitude}, {decimallatitude}],proj3413), 5000
+)
+});
+marker.setStyle(
+new ol.style.Style({
+          fill: new ol.style.Fill({
+          color: [255,148,148,1]}),
+          stroke: new ol.style.Stroke({
+          color: [255,0,0,1],
+          width: 2
+          })
+    })
+)
+var vectorSource = new ol.source.Vector({
+  features: [marker]
+});
+var markerVectorLayer = new ol.layer.Vector({
+  source: vectorSource
+});
+map.addLayer(markerVectorLayer);
+</script>
+<h3> The position of this station is a result of {info}</h3>
+    <table>
+      <tbody>
+        <tr>
+          <th>Station Name</th>
+          <td>{stationname}</td></tr></tbody>
+      <tbody>
+        <tr>
+          <th>Decimal Latitude</th>
+          <td>{decimallatitude}</td></tr></tbody>
+      <tbody>
+        <tr>
+          <th>Decimal Longitude</th>
+          <td>{decimallongitude}</td></tr></tbody>
+  </table>
+  <div id="search_station_block" class="FrxTable FrxTable" frx:block="AeN/search_multi">  
+      <h3> Samples from this station</h3>
     <table>
       <thead>
         <tr>
@@ -49,5 +121,6 @@
           <td>{geartype}</td>
           <td>{sampletype}</td>
           <td>{eventid}</td>
-          <td>{parenteventid}</td></tr></tbody></table></div></body>
+          <td>{parenteventid}</td></tr></tbody></table></div></div>
+</body>
 </html>
