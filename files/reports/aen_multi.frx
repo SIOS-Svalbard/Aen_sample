@@ -30,7 +30,7 @@
 
   <frx:field id="stationname" link="reports/aen_station/?stationname={stationname}"/>
 
-  <frx:field id="eventdate" link="reports/aen_multi/?eventdate=&quot;{eventdate}&quot;"/>
+  <frx:field id="eventdate" link="reports/aen_multi/?startdate={eventdate}&amp;enddate={eventdate}"/>
 </frx:fields>
 <frx:menu/>
 <frx:cache/>
