@@ -26,11 +26,11 @@
 
   <frx:field id="sampletype" link="reports/aen_sampletype/?sampletype={sampletype}"/>
 
-  <frx:field id="geartype" link="reports/aen_gear/?geartype={geartype}"/>
+  <frx:field id="geartype" link="reports/aen_multi/?geartype={geartype}"/>
 
   <frx:field id="stationname" link="reports/aen_station/?stationname={stationname}"/>
 
-  <frx:field id="eventdate" link="reports/aen_date/?eventdate=&quot;{eventdate}&quot;"/>
+  <frx:field id="eventdate" link="reports/aen_multi/?eventdate=&quot;{eventdate}&quot;"/>
 </frx:fields>
 <frx:menu/>
 <frx:cache/>
