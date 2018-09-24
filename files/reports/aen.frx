@@ -4,7 +4,7 @@
 ]>
 <html xmlns:frx="urn:FrxReports">
 <head>
-<title>AeN sample log</title>
+<title>Nansen Legacy full sample log</title>
 <frx:category>Aen</frx:category>
 <frx:options input_format="full_html" skin="datatable"/>
 <frx:parameters>
@@ -34,6 +34,10 @@
 <style/>
 </head>
 <body>
+    <p> This is a view of all the samples and their information in the database.
+        Most usefull for a page search or export to a csv file.
+        Click on the column header to sort on that column
+    </p>
 <div id="get_all_block" class="FrxTable FrxTable nowrap" frx:block="AeN/get_all">    
     
     <table>
