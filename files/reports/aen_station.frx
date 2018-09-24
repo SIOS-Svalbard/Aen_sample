@@ -37,7 +37,7 @@
 </head>
 <body> 
   <div frx:renderer="FrxParameterForm" frx:title="Select station"
-       frx:collapsible="0" frx:collapsed="0"
+       frx:collapsible="1" frx:collapsed="0"
        frx:submit="Search" id="parmeter-form">
        <p>Here you can get the station details and the samples collected from it</p> 
        <p><b>Station name</b></p>

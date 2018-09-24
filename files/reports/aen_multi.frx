@@ -37,8 +37,8 @@
 <style/>
 </head>
 <body>
-    <div frx:renderer="FrxParameterForm" frx:title=""
-       frx:collapsible="0" frx:collapsed="0"
+    <div frx:renderer="FrxParameterForm" frx:title="Filter paramters"
+       frx:collapsible="1" frx:collapsed="0"
        frx:submit="Search" id="parmeter-form">
        <p>Here you can search for samples. Leave a field open if you are not filtering on it</p> 
        <p>{startdate}</p>
