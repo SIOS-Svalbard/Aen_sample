@@ -19,7 +19,11 @@ div.dataTables_length {
  
 div.dataTables_filter {
   float: left;
-  width: 82%;
+  width: 64%;
+}
+
+.dataTables_wrapper input {
+    width: 64%;
 }
 
 div.dataTables_info {
