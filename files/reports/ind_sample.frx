@@ -37,7 +37,7 @@
 </head>
 <body>
 <p>Use this page to find details about a sample.
-    If nothing gets desplayed there was no sample with the ID</p>
+    If nothing gets displayed there was no sample with the ID</p>
     <div id="map" class="map"/>
 <div id="search_eventID" class="FrxFieldTable" frx:block="AeN/search_eventID" frx:foreach="*">    
     <script type="text/javascript">
