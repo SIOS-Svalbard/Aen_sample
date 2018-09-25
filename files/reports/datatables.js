@@ -12,8 +12,9 @@
         "stateSave": true,
         "iDisplayLength": 100,
         "bSort": true,
-        "aLengthMenu": [[50, 100, 200, 500, -1], [50, 100, 200, 500, "All"]],
+        "aLengthMenu": [[20, 50, 100, 200, 500, -1], [20, 50, 100, 200, 500, "All"]],
         "ordering": true,
+        "scrollX": true,
         "order":[[1,"desc"]] 
         });
     }
