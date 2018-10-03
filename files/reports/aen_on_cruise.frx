@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE root [
+<!ENTITY nbsp "&#160;">
+]>
+<html xmlns:frx="urn:FrxReports">
+<head>
+<title>Nansen Legacy gear casts</title>
+<frx:category>Aen</frx:category>
+<frx:options input_format="full_html" skin="datatable"/>
+<frx:parameters>
+  <frx:parm id="startdate" label="Start date" type="date_select" options="date_year_range='-10:0'">2018-09-26</frx:parm>
+  <frx:parm id="enddate" label="End Date" type="date_select" options="date_year_range='-10:0'">2018-10-20</frx:parm>
+  <frx:parm id="geartype" label="Gear Type"/>
+  <frx:parm id="cruisenumber" label="Cruise Number" data_source="AeN/unique_cruise" data_field="cruisenumber" type="select"/>
+</frx:parameters>
+<frx:docgen>
+  <frx:doc type="csv"/>
+</frx:docgen>
+<frx:fields>
+  <frx:field id="eventid" link="reports/ind_sample/?eventid={eventid}"/>
+
+  <frx:field id="sampletype" link="reports/aen_multi/?sampletype={sampletype}&amp;startdate=2018-01-01&amp;enddate=today"/>
+
+  <frx:field id="geartype" link="reports/aen_multi/?geartype={geartype}&amp;startdate=2018-01-01&amp;enddate=today"/>
+
+  <frx:field id="stationname" link="reports/aen_station/?stationname={stationname}"/>
+
+  <frx:field id="eventdate" link="reports/aen_multi/?startdate={eventdate}&amp;enddate={eventdate}"/>
+</frx:fields>
+<frx:menu/>
+<frx:cache/>
+<style/>
+</head>
+<body>
+    <div frx:renderer="FrxParameterForm" frx:title="Filter paramters" frx:collapsible="1" frx:collapsed="1" frx:submit="Search" id="parmeter-form">
+       <p>Here you can search for samples. Leave a field open if you are not filtering on it</p> 
+       <p>{startdate}</p>
+       <p>{enddate}</p>
+       <p><b>Cruise number</b></p>
+       <p>{cruisenumber}</p>
+       <p><b>Gear type</b></p>
+       <p>{geartype}</p>
+  <p>{submit}</p>
+  </div>
+    <h2><font color="red"> The list is updated by Pål, if something is missing ask him</font></h2>
+  <p>To sort columns, click on column header</p>
+<div id="on_cruise_block" class="FrxTable" frx:block="AeN/on_cruise">
+    <table>
+      <thead>
+        <tr>
+          <th>Event Date</th>
+          <th>Event Time (UTC)</th>
+          <th>Decimal Latitude</th>
+          <th>Decimal Longitude</th>
+          <th>Bottom Depth (m)</th>
+          <th>Gear Type</th>
+          <th>Station Name</th>
+          <th>Record Number</th>
+          <th>Event ID</th>
+	</tr>
+	</thead>
+      <tbody>
+        <tr id="on_cruise" frx:foreach="*">
+          <td>{eventdate}</td>
+          <td>{eventtime}</td>
+          <td>{decimallatitude}</td>
+          <td>{decimallongitude}</td>
+          <td>{bottomdepthinmeters}</td>
+          <td>{geartype}</td>
+          <td>{stationname}</td>
+          <td>{recordnumber}</td>
+          <td>{eventid}</td>
+	  </tr>
+  </tbody>
+</table>
+</div>
+</body>
+</html>

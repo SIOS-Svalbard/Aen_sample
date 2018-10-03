@@ -10,11 +10,15 @@
 <frx:parameters>
   <frx:parm id="startdate" label="Start date" type="date_select" options="date_year_range='-10:0'">today</frx:parm>
   <frx:parm id="enddate" label="End Date" type="date_select" options="date_year_range='-10:0'">today</frx:parm>
-  <frx:parm id="stationname" label="Station Name" desc="The name of the station" data_source="AeN/unique_stations" data_field="stationname" type="select"/>
+  <frx:parm id="stationname" label="Station Name" desc="The name of the station" data_source="AeN/unique_stations" data_field="stationname" label_field="stationname" type="select"/>
   <frx:parm id="geartype" label="Gear Type"/>
   <frx:parm id="sampletype" label="Sample Type"/>
   <frx:parm id="cruisenumber" label="Cruise Number" data_source="AeN/unique_cruise" data_field="cruisenumber" type="select"/>
   <frx:parm id="parenteventid" label="Parent Event ID"/>
+  <frx:parm id="startlat" label="Start latitude"/>
+  <frx:parm id="endlat" label="End latitude"/>
+  <frx:parm id="startlon" label="Start longitude"/>
+  <frx:parm id="endlon" label="End longitude"/>
 </frx:parameters>
 <frx:docgen>
   <frx:doc type="csv"/>
@@ -24,9 +28,9 @@
 
   <frx:field id="parenteventid" link="reports/ind_sample/?eventid={pareteventid}"/>
 
-  <frx:field id="sampletype" link="reports/aen_multi/?sampletype={sampletype}"/>
+  <frx:field id="sampletype" link="reports/aen_multi/?sampletype={sampletype}&amp;startdate=2018-01-01&amp;enddate=today"/>
 
-  <frx:field id="geartype" link="reports/aen_multi/?geartype={geartype}"/>
+  <frx:field id="geartype" link="reports/aen_multi/?geartype={geartype}&amp;startdate=2018-01-01&amp;enddate=today"/>
 
   <frx:field id="stationname" link="reports/aen_station/?stationname={stationname}"/>
 
@@ -41,17 +45,33 @@
        <p>Here you can search for samples. Leave a field open if you are not filtering on it</p> 
        <table>
            <tbody>
-               <tr>
+           <tr>
                <td>{startdate}</td>
                <td>{enddate}</td>
            </tr>
-               <tr>
+           <tr>
                <td><b>Station name</b></td>
                <td><b>Cruise number</b></td>
            </tr>
                <tr>
                <td>{stationname}</td>
                <td>{cruisenumber}</td>
+           </tr>
+           <tr>
+               <td><b>Start Latitude</b></td>
+               <td><b>End Latitude</b></td>
+           </tr>
+               <tr>
+               <td>{startlat}</td>
+               <td>{endlat}</td>
+           </tr>
+           <tr>
+               <td><b>Start Longitude</b></td>
+               <td><b>End Longitude</b></td>
+           </tr>
+               <tr>
+               <td>{startlon}</td>
+               <td>{endlon}</td>
            </tr>
            </tbody>
        </table>

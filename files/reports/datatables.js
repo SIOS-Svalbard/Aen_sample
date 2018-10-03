@@ -15,10 +15,14 @@
         "aLengthMenu": [[20, 50, 100, 200, 500, -1], [20, 50, 100, 200, 500, "All"]],
         "ordering": true,
         "scrollX": true,
-        "order":[[1,"desc"]] 
-        });
+	"order": [[0,"desc"]],
+        "columnDefs": [ {
+		"targets": [0],
+		"orderData": [0,1],
+        	"order": [[1,"desc"], [0,"desc"]]
+	}],
+      });
     }
   };
-  
 })(jQuery);
 

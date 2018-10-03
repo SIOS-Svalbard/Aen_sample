@@ -1,2 +1,2 @@
 --ACCESS=access content
-select distinct stationname from aen order by stationname;
+select distinct stationname, decimallatitude, decimallongitude from aen order by stationname;

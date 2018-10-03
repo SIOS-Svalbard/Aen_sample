@@ -10,7 +10,17 @@
 	END;
 	$$ LANGUAGE plpgsql stable;*/
 
-select *, replace(replace(replace(replace(replace(cast(hstore_to_json(other) as text),'{"','<div class="sort"><table class="dataTable"><thead><tr><th>Key</th><th>Value</th></thead><tbody><tr><th>'),'"}' ,'</td></tr></tbody></table></div>'),'": "','</th><td>'),'", "','</td></tr><tr><th>'),'_',' ') as other_form ,  
+/*select *, replace(replace(replace(replace(replace(cast(hstore_to_json(other) as text),'{"','<div class="sort"><table class="dataTable"><thead><tr><th>Key</th><th>Value</th></thead><tbody><tr><th>'),'"}' ,'</td></tr></tbody></table></div>'),'": "','</th><td>'),'", "','</td></tr><tr><th>'),'_',' ') as other_form ,  
 replace(replace(replace(replace(replace(cast(hstore_to_json(metadata) as text),'{"','<div class="sort"><table class="dataTable"><thead><tr><th>Key</th><th>Value</th></thead><tbody><tr><th>'),'"}','</td></th></tbody></table></div>'),'": "','</th><td>'),'", "','</td></tr><tr><th>'),'_',' ') as metadata_form from aen
+	where eventid=:eventid
+        order by eventdate, geartype, sampletype;                             */
+select *, replace(replace(replace(replace(replace(cast(hstore_to_json(other) as text),'{"',''),'"}' ,''),'": "',': '),'", "','
+
+
+'),'_',' ') as other_form ,  
+replace(replace(replace(replace(replace(cast(hstore_to_json(metadata) as text),'{"',''),'"}',''),'": "',': '),'", "','
+
+
+'),'_',' ') as metadata_form from aen
 	where eventid=:eventid
         order by eventdate, geartype, sampletype;                             

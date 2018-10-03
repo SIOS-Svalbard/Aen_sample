@@ -18,9 +18,9 @@
 
   <frx:field id="parenteventid" link="reports/ind_sample?eventid={pareteventid}"/>
 
-  <frx:field id="sampletype" link="reports/aen_multi?sampletype={sampletype}"/>
+  <frx:field id="sampletype" link="reports/aen_multi/?sampletype={sampletype}&amp;startdate=2018-01-01&amp;enddate=today"/>
 
-  <frx:field id="geartype" link="reports/aen_multi?geartype={geartype}"/>
+  <frx:field id="geartype" link="reports/aen_multi/?geartype={geartype}&amp;startdate=2018-01-01&amp;enddate=today"/>
 
   <frx:field id="stationname" link="reports/aen_station?stationname={stationname}"/>
 

@@ -11,9 +11,10 @@ description = Skin used for map.
 ; Make the openlayers plugin available:
 ;
 ; scripts[] = http://openlayers.org/api/OpenLayers.js
-scripts[] = https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js
-scripts[] = https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.2.0/build/ol.js
-scripts[] = https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.5.0/proj4-src.js 
+scripts[] = jquery-3.3.1.min.js
+scripts[] = jquery.dataTables.min.js
+scripts[] = ol.js
+scripts[] = proj4-src.js 
 ;
 ; Use (enable) some dataTables features (by specifying so in a custom JS file):
 ; 
@@ -24,7 +25,7 @@ scripts[] = map.js
 ; Stylesheet inclusions:
 ; 
 ;stylesheets[all][] = https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css
-stylesheets[all][] = https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.2.0/css/ol.css
+stylesheets[all][] = ol.css
 stylesheets[all][] = map.css
 ;
 ; -----------------------------------------------------------
