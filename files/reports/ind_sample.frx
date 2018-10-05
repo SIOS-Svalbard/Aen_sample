@@ -185,6 +185,7 @@ map.addLayer(markerVectorLayer);
           <th>Station Name</th>
           <th>Gear Type</th>
           <th>Sample Type</th>
+          <th>Record Number</th>
           <th>Event ID</th>
           <th>Parent Event ID</th></tr></thead>
       <tbody>
@@ -193,6 +194,7 @@ map.addLayer(markerVectorLayer);
           <td>{stationname}</td>
           <td>{geartype}</td>
           <td>{sampletype}</td>
+          <td>{recordnumber}</td>
           <td>{eventid}</td>
 	  <td>{parenteventid}</td></tr>
 </tbody></table></div></div>
