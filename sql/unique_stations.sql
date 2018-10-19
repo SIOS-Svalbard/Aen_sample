@@ -1,2 +1,2 @@
 --ACCESS=access content
-select distinct stationname, decimallatitude, decimallongitude from aen order by stationname;
+select stationname, avg(decimallatitude) as avglat, avg(decimallongitude) as avglong ,avg(bottomdepthinmeters) as avgdepth from aen group by stationname order by stationname;

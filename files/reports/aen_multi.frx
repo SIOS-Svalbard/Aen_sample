@@ -26,7 +26,7 @@
 <frx:fields>
   <frx:field id="eventid" link="reports/ind_sample/?eventid={eventid}"/>
 
-  <frx:field id="parenteventid" link="reports/ind_sample/?eventid={pareteventid}"/>
+  <frx:field id="parenteventid" link="reports/ind_sample/?eventid={parenteventid}"/>
 
   <frx:field id="sampletype" link="reports/aen_multi/?sampletype={sampletype}&amp;startdate=2018-01-01&amp;enddate=today"/>
 

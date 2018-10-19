@@ -5,15 +5,15 @@ select eventdate, stationname, geartype, sampletype, eventID, parenteventID from
     ELSE TRUE
     END
     AND
-	CASE when :stationname is not NULL THEN stationname LIKE concat('%', :stationname ,'%')
+	CASE when :stationname is not NULL THEN stationname LIKE concat('%',:stationname,'%')
     ELSE TRUE
     END
     AND
-    CASE when :geartype is not NULL THEN geartype LIKE concat('%', :geartype , '%') 
+    CASE when :geartype is not NULL THEN geartype LIKE concat('%',:geartype, '%') 
     ELSE TRUE
     END
     AND
-    CASE when :sampletype is not NULL THEN sampletype LIKE concat('%', :sampletype ,'%')
+    CASE when :sampletype is not NULL THEN sampletype LIKE concat('%',:sampletype,'%')
     ELSE TRUE
     END
     AND

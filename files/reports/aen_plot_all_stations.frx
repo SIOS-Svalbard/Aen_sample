@@ -79,10 +79,8 @@
                         text: new ol.style.Text({
                             textAlign: 'left',
                             textBaseline: 'bottom',
-                            font: 'Arial',
+                            font: 'Halvetica',
                             text: '{stationname}',
-                            fill: new ol.style.Fill({color: 'red'}),
-                            stroke: new ol.style.Stroke({color: 'white', width: '2'}),
                             offsetX: 0,
                             offsetY: 0,
                             rotation: 0

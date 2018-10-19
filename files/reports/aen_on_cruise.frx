@@ -42,8 +42,8 @@
        <p>{geartype}</p>
   <p>{submit}</p>
   </div>
-    <h2><font color="red"> The list is updated by Pål, if something is missing ask him</font></h2>
-  <p>To sort columns, click on column header</p>
+    <h2><font color="red"> The list is updated by Pål, if something is missing, ask him</font></h2>
+  <p>To sort the columns, click on the column header</p>
 <div id="on_cruise_block" class="FrxTable" frx:block="AeN/on_cruise">
     <table>
       <thead>

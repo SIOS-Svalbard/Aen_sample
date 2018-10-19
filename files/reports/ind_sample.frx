@@ -108,7 +108,7 @@ map.addLayer(markerVectorLayer);
           <td>{stationname}</td></tr></tbody>
       <tbody>
         <tr>
-          <th>Event Time</th>
+          <th>Event Time (UTC)</th>
           <td>{eventtime}</td></tr></tbody>
       <tbody>
         <tr>
