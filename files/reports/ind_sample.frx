@@ -29,7 +29,8 @@
   <frx:field id="eventdate" link="reports/aen_multi?startdate={eventdate}&amp;enddate={eventdate}"/>
 
 
-  <frx:field id="metadata" format="xhtml"/>
+  <frx:field id="metadata_form" format="xhtml"/>
+  <frx:field id="other_form" format="xhtml"/>
 </frx:fields>
 <frx:menu/>
 <frx:cache/>
