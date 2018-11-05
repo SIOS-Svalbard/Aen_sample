@@ -178,7 +178,26 @@ map.addLayer(markerVectorLayer);
       <tbody>
         <tr>
           <th>Metadata</th>
-          <td>{metadata_form}</td></tr></tbody></table><div id="search_parentEventID_block" class="FrxTable FrxTable" frx:block="AeN/search_parentEventID">  <strong> Children of sample</strong>
+          <td>{metadata_form}</td></tr></tbody>
+      <tbody>
+        <tr>
+          <th>Entry created</th>
+          <td>{created}</td></tr></tbody>
+      <tbody>
+        <tr>
+          <th>Entry modified last</th>
+          <td>{modified}</td></tr></tbody>
+      <tbody>
+        <tr>
+          <th>Modification history</th>
+          <td>{history}</td></tr></tbody>
+      <tbody>
+        <tr>
+          <th>Source file</th>
+          <td>{source}</td></tr></tbody>
+  
+  
+  </table><div id="search_parentEventID_block" class="FrxTable FrxTable" frx:block="AeN/search_parentEventID">  <strong> Children of sample</strong>
     <table>
       <thead>
         <tr>
