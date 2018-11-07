@@ -10,7 +10,7 @@
 <frx:parameters>
   <frx:parm id="startdate" label="Start date" type="date_select" options="date_year_range='-10:0'">today</frx:parm>
   <frx:parm id="enddate" label="End Date" type="date_select" options="date_year_range='-10:0'">today</frx:parm>
-  <frx:parm id="stationname" label="Station Name" desc="The name of the station" data_source="AeN/unique_stations" data_field="stationname" type="select"/>
+  <frx:parm id="stationname" label="Station Name (hold ctrl for multi)" desc="The name of the station" data_source="AeN/unique_stations" data_field="stationname" type="multiselect"/>
   <frx:parm id="geartype" label="Gear Type"/>
   <frx:parm id="sampletype" label="Sample Type"/>
   <frx:parm id="cruisenumber" label="Cruise Number" data_source="AeN/unique_cruise" data_field="cruisenumber" type="select"/>
@@ -22,7 +22,7 @@
 <frx:fields>
   <frx:field id="eventid" link="reports/ind_sample/?eventid={eventid}"/>
 
-  <frx:field id="parenteventid" link="reports/ind_sample/?eventid={pareteventid}"/>
+  <frx:field id="parenteventid" link="reports/ind_sample/?eventid={parenteventid}"/>
 
   <frx:field id="sampletype" link="reports/aen_multi/?sampletype={sampletype}"/>
 
@@ -46,7 +46,7 @@
                <td>{enddate}</td>
            </tr>
                <tr>
-               <td><b>Station name</b></td>
+               <td><b>Station name (hold CTRL for multi)</b></td>
                <td><b>Cruise number</b></td>
            </tr>
                <tr>

@@ -5,7 +5,7 @@ select eventdate, stationname, geartype, sampletype, eventID, parenteventID from
     ELSE TRUE
     END
     AND
-	CASE when :stationname is not NULL THEN stationname LIKE concat('%', :stationname ,'%')
+	CASE when (:stationname) is not NULL THEN stationname in (:stationname)
     ELSE TRUE
     END
     AND
