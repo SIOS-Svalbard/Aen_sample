@@ -51,7 +51,7 @@
         layers: [
           new ol.layer.Tile({
           source: new ol.source.TileWMS({
-          attributions: 'Imagery reproduced from the GEBCO_2014 Grid, version 20150318, <a href="https://www.gebco.net">www.gbaco.net</a>',
+          attributions: 'Imagery reproduced from the GEBCO_2014 Grid, version 20150318, <a href="https://www.gebco.net">www.gebco.net</a>',
           params: {
           'LAYERS' : 'GEBCO_NORTH_POLAR_VIEW'},
           projection: 'EPSG:3413',
