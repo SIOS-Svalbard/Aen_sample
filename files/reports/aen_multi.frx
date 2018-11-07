@@ -15,6 +15,10 @@
   <frx:parm id="sampletype" label="Sample Type"/>
   <frx:parm id="cruisenumber" label="Cruise Number" data_source="AeN/unique_cruise" data_field="cruisenumber" type="select"/>
   <frx:parm id="parenteventid" label="Parent Event ID"/>
+  <frx:parm id="startlat" label="Start latitude"/>
+  <frx:parm id="endlat" label="End latitude"/>
+  <frx:parm id="startlon" label="Start longitude"/>
+  <frx:parm id="endlon" label="End longitude"/>
 </frx:parameters>
 <frx:docgen>
   <frx:doc type="csv"/>
@@ -24,9 +28,9 @@
 
   <frx:field id="parenteventid" link="reports/ind_sample/?eventid={parenteventid}"/>
 
-  <frx:field id="sampletype" link="reports/aen_multi/?sampletype={sampletype}"/>
+  <frx:field id="sampletype" link="reports/aen_multi/?sampletype={sampletype}&amp;startdate=2018-01-01&amp;enddate=today"/>
 
-  <frx:field id="geartype" link="reports/aen_multi/?geartype={geartype}"/>
+  <frx:field id="geartype" link="reports/aen_multi/?geartype={geartype}&amp;startdate=2018-01-01&amp;enddate=today"/>
 
   <frx:field id="stationname" link="reports/aen_station/?stationname={stationname}"/>
 
@@ -52,6 +56,22 @@
                <tr>
                <td>{stationname}</td>
                <td>{cruisenumber}</td>
+           </tr>
+           <tr>
+               <td><b>Start Latitude</b></td>
+               <td><b>End Latitude</b></td>
+           </tr>
+               <tr>
+               <td>{startlat}</td>
+               <td>{endlat}</td>
+           </tr>
+           <tr>
+               <td><b>Start Longitude</b></td>
+               <td><b>End Longitude</b></td>
+           </tr>
+               <tr>
+               <td>{startlon}</td>
+               <td>{endlon}</td>
            </tr>
            </tbody>
        </table>

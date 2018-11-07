@@ -19,15 +19,15 @@
 
   <frx:field id="parenteventid" link="reports/ind_sample?eventid={parenteventid}"/>
 
-  <frx:field id="sampletype" link="reports/aen_multi?sampletype={sampletype}"/>
 
-  <frx:field id="geartype" link="reports/aen_multi?geartype={geartype}"/>
+  <frx:field id="sampletype" link="reports/aen_multi/?sampletype={sampletype}&amp;startdate=2018-01-01&amp;enddate=today"/>
 
+  <frx:field id="geartype" link="reports/aen_multi/?geartype={geartype}&amp;startdate=2018-01-01&amp;enddate=today"/>
   <frx:field id="stationname" link="reports/aen_station?stationname={stationname}"/>
-  <frx:field id="cruisenumber" link="reports/aen_multi?cruisenumber={cruisenumber}"/>
+  <frx:field id="cruisenumber" link="reports/aen_multi?cruisenumber={cruisenumber}&amp;startdate=2018-01-01&amp;enddate=today"/>
 
   <frx:field id="eventdate" link="reports/aen_multi?startdate={eventdate}&amp;enddate={eventdate}"/>
-  <frx:field id="info" />
+  <frx:field id="info"/>
 
   <frx:field id="metadata" format="xhtml"/>
 </frx:fields>
@@ -36,16 +36,14 @@
 <style/>
 </head>
 <body> 
-  <div frx:renderer="FrxParameterForm" frx:title="Select station"
-       frx:collapsible="1" frx:collapsed="0"
-       frx:submit="Search" id="parmeter-form">
+  <div frx:renderer="FrxParameterForm" frx:title="Select station" frx:collapsible="1" frx:collapsed="0" frx:submit="Search" id="parmeter-form">
        <p>Here you can get the station details and the samples collected from it</p> 
        <p><b>Station name</b></p>
        <p>{stationname}</p>
   <p>{submit}</p>
   </div>
 <h1>Station {parm.stationname}</h1>
-    <div id="map" class="map"></div>
+    <div id="map" class="map"/>
 <div id="search_station" class="FrxFieldTable" frx:block="AeN/search_station" frx:foreach="*">    
     <script type="text/javascript">
       proj4.defs('EPSG:3413','+proj=stere +lat_0=90 +lat_ts=70 +lon_0=-45 +k=1 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs')
