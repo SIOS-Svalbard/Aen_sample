@@ -65,3 +65,8 @@ table.dataTable thead .sorting_desc {
    background-repeat: no-repeat;
    background-position: center right;
 }
+
+/*style the multiselect for station names*/
+.form-select[id="edit-params-stationname"] {
+  height: 70px;
+}
