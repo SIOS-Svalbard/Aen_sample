@@ -12,10 +12,10 @@ Select  CASE
 
 	COALESCE(
 		(select decimallatitude from aen where stationname = :stationname AND sampletype = 'Station'),
-		(select avg(decimallatitude) as avglat from aen where stationname = :stationname)
+		(select round(avg(decimallatitude)::numeric,4) as avglat from aen where stationname = :stationname)
 		) as decimallatitude,
 
 	COALESCE(
 		(select decimallongitude from aen where stationname = :stationname AND sampletype = 'Station'),
-		(select avg(decimallongitude) as avglong from aen where stationname = :stationname)
+		(select round(avg(decimallongitude)::numeric,4) as avglong from aen where stationname = :stationname)
 		) as decimallongitude;
