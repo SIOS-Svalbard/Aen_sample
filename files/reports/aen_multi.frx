@@ -41,8 +41,9 @@
 <style/>
 </head>
 <body>
+    <!--<div frx:renderer="FrxXML" frx:title="Filter paramters" frx:collapsible="1" frx:collapsed="0" frx:submit="Search" id="parmeter-form">-->
     <div frx:renderer="FrxParameterForm" frx:title="Filter paramters" frx:collapsible="1" frx:collapsed="0" frx:submit="Search" id="parmeter-form">
-       <p>Here you can search for samples. Leave a field open if you are not filtering on it</p> 
+       <p>Here you can filter the sample log. Leave a field open if you are not filtering on it.</p> 
        <table>
            <tbody>
                <tr>
@@ -50,7 +51,7 @@
                <td>{enddate}</td>
            </tr>
                <tr>
-               <td><b>Station name (hold CTRL for multi)</b></td>
+               <td><b>Station name (hold CTRL to select multiple)</b></td>
                <td><b>Cruise number</b></td>
            </tr>
                <tr>
@@ -83,7 +84,38 @@
        <p>{parenteventid}</p>
   <p>{submit}</p>
   </div>
-  <p>To sort columns, click on column header</p>
+  <p>Columns can be sorted by clicking the column header.</p>
+  <script type="text/javascript">
+var myUrl = "{site.base_url}"+"/cgi-bin/export_search.cgi?{site.language.name}&amp;startdate={parm.startdate}&amp;enddate={parm.enddate}&amp;geartype={parm.geartype}&amp;sampletype={parm.sampletype}&amp;cruisenumber={parm.cruisenumber}&amp;parenteventid={parm.parenteventid}&amp;startlat={parm.startlat}&amp;startlon={parm.startlon}&amp;endlat={parm.endlat}&amp;endlon={parm.endlon}";
+function addQSParm(name, value) {
+    var re = new RegExp("([?&amp;]" + name + "=)[^&amp;]+", "");
+    function add(sep) {
+        myUrl += sep + name + "=" + encodeURIComponent(value);
+    };
+
+    function change() {
+        myUrl = myUrl.replace(re, "$1" + encodeURIComponent(value));
+    };
+    if (myUrl.indexOf("?") === -1) {
+        add("?");
+    } else {
+        if (re.test(myUrl)) {
+            change();
+        } else {
+            add("&amp;");
+        };
+    };
+};
+
+var values = Array.prototype.slice.call(document.querySelectorAll('#edit-params-stationname option:checked'),0).map(function(v,i,a) {
+    return v.value;
+});
+
+var stat_array = values.join('|');
+addQSParm("stationname",stat_array);
+var text = "Get full information from the search as a CSV file";
+document.write('<a href="'+myUrl+'">'+text+'</a>')
+</script>
 <div id="search_multi_block" class="FrxTable" frx:block="AeN/search_multi">
     <table>
       <thead>

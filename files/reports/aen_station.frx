@@ -37,7 +37,7 @@
 </head>
 <body> 
   <div frx:renderer="FrxParameterForm" frx:title="Select station" frx:collapsible="1" frx:collapsed="0" frx:submit="Search" id="parmeter-form">
-       <p>Here you can get the station details and the samples collected from it</p> 
+       <p>Here you can get the station details and a list of the samples collected from it.</p> 
        <p><b>Station name</b></p>
        <p>{stationname}</p>
   <p>{submit}</p>
@@ -94,7 +94,7 @@ var markerVectorLayer = new ol.layer.Vector({
 });
 map.addLayer(markerVectorLayer);
 </script>
-<h3> The position of this station is a result of {info}</h3>
+<h3> The position of this station is a result of {info}.</h3>
     <table>
       <tbody>
         <tr>
@@ -110,7 +110,7 @@ map.addLayer(markerVectorLayer);
           <td>{decimallongitude}</td></tr></tbody>
   </table>
   <div id="search_station_block" class="FrxTable FrxTable" frx:block="AeN/search_multi">  
-      <h3> Samples from this station</h3>
+      <h3> Samples from this station:</h3>
     <table>
       <thead>
         <tr>
