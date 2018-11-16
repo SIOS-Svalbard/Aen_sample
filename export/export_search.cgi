@@ -71,7 +71,6 @@ if method == "GET":  # This is for getting the page
                 filters[key]=form[key].value
     
     #sys.stdout.buffer.write(b"Content-Type: text/html\n\n")
-    #print(filters)
 
     def get_filter(startdate =None,enddate=None,stationname=None,geartype=None,sampletype=None,cruisenumber=None,parenteventid=None,startlat=None,startlon=None,endlat=None,endlon=None):
         return ''' 
@@ -105,9 +104,14 @@ if method == "GET":  # This is for getting the page
         AND
         CASE when {startlon} is not NULL THEN decimallongitude between {startlon} AND  {endlon}
         ELSE TRUE
-        END'''.format(startdate = startdate,enddate=enddate,stationname=stationname,geartype=geartype,sampletype=sampletype,cruisenumber=cruisenumber,parenteventid=parenteventid,startlat=startlat,startlon=startlon,endlat=endlat,endlon=endlon)
+        END'''.format(startdate = field(startdate),enddate=field(enddate),stationname=field(stationname),geartype=field(geartype),sampletype=field(sampletype),cruisenumber=field(cruisenumber),parenteventid=field(parenteventid),startlat=field(startlat),startlon=field(startlon),endlat=field(endlat),endlon=field(endlon))
 
 
+    def field(f):
+        if f==None:
+            return 'NULL'
+        else:
+            return "'" + str(f) + "'"
 
     def get_fields(columns):
         temp = [] 
@@ -120,7 +124,8 @@ if method == "GET":  # This is for getting the page
     conn.set_session(readonly=True)
     cur = conn.cursor()
 
-    filter_query = get_filter(**filters).as_string(conn) 
+    filter_query = get_filter(**filters)
+    #print(filter_query)
 
     cur.execute('SELECT distinct((each(other)).key) from aen where '+ filter_query)
     other_fields= cur.fetchall()
