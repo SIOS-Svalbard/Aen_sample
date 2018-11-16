@@ -11,8 +11,8 @@
   <frx:parm id="startdate" label="Start date" type="date_select" options="date_year_range='-10:0'">today</frx:parm>
   <frx:parm id="enddate" label="End Date" type="date_select" options="date_year_range='-10:0'">today</frx:parm>
   <frx:parm id="stationname" label="Station Name (hold ctrl for multi)" desc="The name of the station" data_source="AeN/unique_stations" data_field="stationname" label_field="stationname" type="multiselect"/>
-  <frx:parm id="geartype" label="Gear Type"/>
-  <frx:parm id="sampletype" label="Sample Type"/>
+  <frx:parm id="geartype" desc="CTD (can be part of type)" label="Gear Type"/>
+  <frx:parm id="sampletype" desc="Zooplankton (can be part of type)" label="Sample Type"/>
   <frx:parm id="cruisenumber" label="Cruise Number" data_source="AeN/unique_cruise" data_field="cruisenumber" type="select"/>
   <frx:parm id="parenteventid" label="Parent Event ID"/>
   <frx:parm id="startlat" label="Start latitude"/>
@@ -51,7 +51,7 @@
                <td>{enddate}</td>
            </tr>
                <tr>
-               <td><b>Station name (hold CTRL to select multiple)</b></td>
+                   <td><b>Station name</b> (hold CTRL to select multiple)</td>
                <td><b>Cruise number</b></td>
            </tr>
                <tr>
@@ -59,16 +59,16 @@
                <td>{cruisenumber}</td>
            </tr>
            <tr>
-               <td><b>Start Latitude</b></td>
-               <td><b>End Latitude</b></td>
+               <td><b>Start Latitude</b> (e.g. 82.11)</td>
+               <td><b>End Latitude</b> (e.g. 83.00)</td>
            </tr>
                <tr>
                <td>{startlat}</td>
                <td>{endlat}</td>
            </tr>
            <tr>
-               <td><b>Start Longitude</b></td>
-               <td><b>End Longitude</b></td>
+               <td><b>Start Longitude </b>(e.g 16.00)</td>
+               <td><b>End Longitude </b>(e.g. 32.00)</td>
            </tr>
                <tr>
                <td>{startlon}</td>
@@ -76,9 +76,9 @@
            </tr>
            </tbody>
        </table>
-       <p><b>Gear type</b></p>
+       <p><b>Gear type</b> (e.g. CTD or part of type)</p>
        <p>{geartype}</p>
-       <p><b>Sample type</b></p>
+       <p><b>Sample type </b>(e.g. Zooplankton or part of type)</p>
        <p>{sampletype}</p>
        <p><b>Parent event ID</b></p>
        <p>{parenteventid}</p>
