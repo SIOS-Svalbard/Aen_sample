@@ -18,7 +18,6 @@ import cgitb
 import uuid
 import shutil
 import psycopg2
-from psycopg2 import sql
 import datetime as dt
 
 columns = ["eventID",
@@ -75,7 +74,7 @@ if method == "GET":  # This is for getting the page
     #print(filters)
 
     def get_filter(startdate =None,enddate=None,stationname=None,geartype=None,sampletype=None,cruisenumber=None,parenteventid=None,startlat=None,startlon=None,endlat=None,endlon=None):
-        return sql.SQL(''' 
+        return ''' 
         CASE when {startdate} is not NULL THEN eventdate between {startdate} AND  {enddate}
         ELSE TRUE
         END
@@ -106,7 +105,7 @@ if method == "GET":  # This is for getting the page
         AND
         CASE when {startlon} is not NULL THEN decimallongitude between {startlon} AND  {endlon}
         ELSE TRUE
-        END''').format(startdate = sql.Literal(startdate),enddate=sql.Literal(enddate),stationname=sql.Literal(stationname),geartype=sql.Literal(geartype),sampletype=sql.Literal(sampletype),cruisenumber=sql.Literal(cruisenumber),parenteventid=sql.Literal(parenteventid),startlat=sql.Literal(startlat),startlon=sql.Literal(startlon),endlat=sql.Literal(endlat),endlon=sql.Literal(endlon))
+        END'''.format(startdate = startdate,enddate=enddate,stationname=stationname,geartype=geartype,sampletype=sampletype,cruisenumber=cruisenumber,parenteventid=parenteventid,startlat=startlat,startlon=startlon,endlat=endlat,endlon=endlon)
 
 
 
