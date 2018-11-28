@@ -3,12 +3,10 @@
 
 
 '''
- -- Web interface for generating Excel sheet.
- Fork of https://github.com/umeldt/darwinsheet
+ -- Web interface for exproting a Postgresql search.
 
 
 @author:     Pål Ellingsen
-@author:     Christian Svindseth
 @deffield    updated: Updated
 '''
 
@@ -45,7 +43,7 @@ columns = ["eventID",
            "history",
            "source"]
 
-__updated__ = '2018-11-12'
+__updated__ = '2018-11-28'
 
 
 # cgitb.enable()
