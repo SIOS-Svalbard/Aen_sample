@@ -70,3 +70,7 @@ table.dataTable thead .sorting_desc {
 .form-select[id="edit-params-stationname"] {
   height: 70px;
 }
+.map {
+    height: 300px;
+    width: 45%;
+}

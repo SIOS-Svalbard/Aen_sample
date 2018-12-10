@@ -128,8 +128,6 @@
    ol.proj.proj4.register(proj4);
    var proj3413 = new ol.proj.get('EPSG:3413');
    proj3413.setExtent([-4194304, -4194304, 4194304, 4194304]);
-   var source = new ol.source.Vector({warpX: false});
-   var vector = new ol.layer.Vector({source: source});
    var map = new ol.Map({
        target: 'map',
        layers: [
@@ -141,8 +139,7 @@
                    projection: 'EPSG:3413',
                    url: 'https://www.gebco.net/data_and_products/gebco_web_services/north_polar_view_wms/mapserv?'
                    })
-               }), 
-           vector
+               })
            ],
        view: new ol.View({
        center: ol.proj.fromLonLat([30, 81], proj3413),
@@ -153,50 +150,60 @@
    });
 
      // a DragBox interaction used to select features by drawing boxes
-     //  var dragBox = new ol.interaction.DragBox({
-     //    condition: ol.events.condition.platformModifierKeyOnly
-     //  });
+      var dragBox = new ol.interaction.DragBox({
+        condition: ol.events.condition.platformModifierKeyOnly 
+      });
+  // Do not use single line curly bracket arguments as forena replaces them
+        var source = new ol.source.Vector();
+      var vector = new ol.layer.Vector({
+          source:source
+      });
+      map.addLayer(vector);
 
 
-      var draw;
-     function addInteraction() {
-          var geometryFunction;
-          value = 'Circle';
-          geometryFunction = ol.interaction.Draw.createBox();
-          draw = new ol.interaction.Draw({
-            source: source,
-            type: value,
-            geometryFunction: geometryFunction
-          });
-          map.addInteraction(draw);
-        }
 
-
-      addInteraction();
-
-
-      //draw.on('drawend', function() {
+      dragBox.on('boxend', function(evt) {
         // features that intersect the box are added to the collection of
         // selected features
-//        var startlon = document.getElementById('edit-params-startlon');
-//        var startlat = document.getElementById('edit-params-startlat');
-//        var endlon = document.getElementById('edit-params-endlon');
-//        var endlat = document.getElementById('edit-params-endlat');
+        var startlon = document.getElementById('edit-params-startlon');
+        var startlat = document.getElementById('edit-params-startlat');
+        var endlon = document.getElementById('edit-params-endlon');
+        var endlat = document.getElementById('edit-params-endlat');
 
-        //var extent = draw.getGeometry().getExtent();
-        //var upperleft = ol.proj.toLonLat([extent[0],extent[1]],proj3413)
-        //var lowerright = ol.proj.toLonLat([extent[2],extent[3]],proj3413)
+        var extent = dragBox.getGeometry().getExtent();
+        var upperleft = ol.proj.toLonLat([extent[0],extent[1]],proj3413)
+        var lowerright = ol.proj.toLonLat([extent[2],extent[3]],proj3413)
 
-        //startlon.value = upperleft[0];
-        //endlon.value = lowerright[0];
+        startlon.value = upperleft[0];
+        endlon.value = lowerright[0];
 
-        //startlat.value = lowerright[1];
-        //endlat.value = upperleft[1];
-        //map.removeInteraction(draw)
+        startlat.value = lowerright[1];
+        endlat.value = upperleft[1];
 
-//        });
+        var geom = dragBox.getGeometry();
+        var feat = new ol.Feature({ 
+            geometry: geom
+        });
+        feat.setStyle(
+            new ol.style.Style({
+                stroke: new ol.style.Stroke({
+                color: 'blue',
+                width: 2
+              }),
+              fill: new ol.style.Fill({
+                color: 'rgba(0, 0, 255, 0.1)'
+              })
+            }) 
+        );
+        source.addFeature(feat);
+
+        
+      });
+
+
+      //function makeBox(geom)
       
-
+      map.addInteraction(dragBox);
 
 
    </script>
