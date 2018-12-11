@@ -75,7 +75,14 @@
                <td>{endlon}</td>
            </tr>
            <tr>
-               <td>
+               <tr>
+               <td></td>
+               <td>Select approxemate area by holding down CTRL key (Meta key on Mac).
+
+
+               Red area shows area for returned search.</td>
+           </tr>
+                <td>
                    <p><b>Gear type</b> (e.g. CTD or part of type)</p>
                    <p>{geartype}</p>
                    <p><b>Sample type </b>(e.g. Zooplankton or part of type)</p>
@@ -90,7 +97,6 @@
    </table>
    <p>{submit}</p>
    </div>
-   <p>Columns can be sorted by clicking the column header.</p>
    <script type="text/javascript">
        var myUrl = "{site.base_url}"+"/cgi-bin/export_search.cgi?{site.language.name}&amp;startdate={parm.startdate}&amp;enddate={parm.enddate}&amp;geartype={parm.geartype}&amp;sampletype={parm.sampletype}&amp;cruisenumber={parm.cruisenumber}&amp;parenteventid={parm.parenteventid}&amp;startlat={parm.startlat}&amp;startlon={parm.startlon}&amp;endlat={parm.endlat}&amp;endlon={parm.endlon}";
        function addQSParm(name, value) {
@@ -145,7 +151,7 @@
        center: ol.proj.fromLonLat([30, 81], proj3413),
        projection: proj3413,
        zoom: 4,
-       rotation: 1.05
+       rotation: 1.20
        })
    });
 
@@ -170,20 +176,44 @@
         var endlon = document.getElementById('edit-params-endlon');
         var endlat = document.getElementById('edit-params-endlat');
 
-        var extent = dragBox.getGeometry().getExtent();
-        var upperleft = ol.proj.toLonLat([extent[0],extent[1]],proj3413)
-        var lowerright = ol.proj.toLonLat([extent[2],extent[3]],proj3413)
+        var coords  = dragBox.getGeometry().getCoordinates();
+        var lons = [];
+        var lats = [];
+        coords=coords[0];
+         // can not use for loops in forena 
+        var i = 0
+        coords[i] = ol.proj.toLonLat(coords[i],proj3413);
+        lons[i] = coords[i][0];
+        lats[i] = coords[i][1];
+        i = 1
+        coords[i] = ol.proj.toLonLat(coords[i],proj3413);
+        lons[i] = coords[i][0];
+        lats[i] = coords[i][1];
+        i = 2
+        coords[i] = ol.proj.toLonLat(coords[i],proj3413);
+        lons[i] = coords[i][0];
+        lats[i] = coords[i][1];
+        i = 3
+        coords[i] = ol.proj.toLonLat(coords[i],proj3413);
+        lons[i] = coords[i][0];
+        lats[i] = coords[i][1];
+        i = 4
+        coords[i] = ol.proj.toLonLat(coords[i],proj3413);
+        lons[i] = coords[i][0];
+        lats[i] = coords[i][1];
 
-        startlon.value = upperleft[0];
-        endlon.value = lowerright[0];
 
-        startlat.value = lowerright[1];
-        endlat.value = upperleft[1];
+        startlon.value = Math.min.apply(null,lons);
+        endlon.value = Math.max.apply(null,lons);
+
+        startlat.value = Math.min.apply(null,lats);
+        endlat.value = Math.max.apply(null,lats);
 
         var geom = dragBox.getGeometry();
         var feat = new ol.Feature({ 
             geometry: geom
         });
+
         feat.setStyle(
             new ol.style.Style({
                 stroke: new ol.style.Stroke({
@@ -199,6 +229,40 @@
 
         
       });
+    
+    if ( {parm.startlat} ) {
+        var rectangle =  [ ol.proj.fromLonLat([ {parm.startlon}, {parm.startlat} ],proj3413),
+                        ol.proj.fromLonLat([{parm.endlon}, {parm.startlat} ],proj3413),
+                        ol.proj.fromLonLat([{parm.endlon}, {parm.endlat} ],proj3413),
+                        ol.proj.fromLonLat([{parm.startlon}, {parm.endlat} ],proj3413),
+                        ol.proj.fromLonLat([{parm.startlon}, {parm.startlat} ],proj3413)
+                        ];
+      var polygon = new ol.geom.Polygon([ rectangle ])  ;
+      var square = new ol.Feature( polygon);
+
+      square.setStyle(
+            new ol.style.Style({
+                stroke: new ol.style.Stroke({
+                color: 'red',
+                width: 2
+              }),
+              fill: new ol.style.Fill({
+                color: 'rgba(255, 0, 0, 0.1)'
+              })
+            }) 
+        );
+    // Create vector source and the feature to it.
+    var vectorSource = new ol.source.Vector();
+    vectorSource.addFeature(square);
+
+    // Create vector layer attached to the vector source.
+    var vectorLayer = new ol.layer.Vector({
+      source: vectorSource
+    });
+
+    // Add the vector layer to the map.
+    map.addLayer(vectorLayer);
+    };
 
 
       //function makeBox(geom)
@@ -206,7 +270,49 @@
       map.addInteraction(dragBox);
 
 
+
    </script>
+  <!--For plotting all the stations -->
+<div id="unique_stations_block" class="FrxTable FrxTable" frx:block="AeN/unique_stations" frx:foreach="*">    
+    <script type="text/javascript">
+        var marker = new ol.Feature({
+        name : '{sname}',
+        geometry: new ol.geom.Circle(
+        ol.proj.fromLonLat([{avglong}, {avglat}],'EPSG:3413'), 1000
+        )
+        });
+        marker.setStyle(
+        new ol.style.Style({
+            fill: new ol.style.Fill({
+                color: [255,148,148,1]
+                }),
+            stroke: new ol.style.Stroke({
+                color: [255,0,0,1],
+                width: 2
+                }),
+            text: new ol.style.Text({
+                textAlign: 'left',
+                textBaseline: 'bottom',
+                font: 'Halvetica',
+                text: '{sname}',
+                offsetX: 0,
+                offsetY: 0,
+                rotation: 0
+                })
+            })
+        );
+
+        var vectorSource = new ol.source.Vector({
+        features: [marker]
+        });
+        var markerVectorLayer = new ol.layer.Vector({
+        source: vectorSource
+        });
+        map.addLayer(markerVectorLayer);
+    </script>
+</div>
+
+   <p>Columns can be sorted by clicking the column header.</p>
    <div id="search_multi_block" class="FrxTable" frx:block="AeN/search_multi">
        <table>
            <thead>
