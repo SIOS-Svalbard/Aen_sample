@@ -97,6 +97,7 @@
    </table>
    <p>{submit}</p>
    </div>
+   <a id='export_csv' href=''>Get full information from the search as a CSV file</a>
    <script type="text/javascript">
        var myUrl = "{site.base_url}"+"/cgi-bin/export_search.cgi?{site.language.name}&amp;startdate={parm.startdate}&amp;enddate={parm.enddate}&amp;geartype={parm.geartype}&amp;sampletype={parm.sampletype}&amp;cruisenumber={parm.cruisenumber}&amp;parenteventid={parm.parenteventid}&amp;startlat={parm.startlat}&amp;startlon={parm.startlon}&amp;endlat={parm.endlat}&amp;endlon={parm.endlon}";
        function addQSParm(name, value) {
@@ -125,10 +126,7 @@
 
        var stat_array = values.join('|');
        addQSParm("stationname",stat_array);
-       var text = "Get full information from the search as a CSV file";
-       document.write('<a href="'+myUrl+'">'+text+'</a>')
-
-
+       document.getElementById('export_csv').href=myUrl;
 
    proj4.defs('EPSG:3413','+proj=stere +lat_0=90 +lat_ts=70 +lon_0=-45 +k=1 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs')
    ol.proj.proj4.register(proj4);
