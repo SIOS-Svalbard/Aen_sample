@@ -12,6 +12,8 @@ description = Skin used in customized reports.
 ;
 ; scripts[] = dataTables/media/js/jquery.dataTables.min.js
 scripts[] = https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js
+scripts[] = https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.2.0/build/ol.js
+scripts[] = https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.5.0/proj4-src.js 
 ;
 ; Use (enable) some dataTables features (by specifying so in a custom JS file):
 ; 
@@ -23,6 +25,7 @@ scripts[] = datatables.js
 ; 
 ;stylesheets[all][] = https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css
 stylesheets[all][] = datatables.css
+stylesheets[all][] = https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.2.0/css/ol.css
 ;
 ; -----------------------------------------------------------
 ;

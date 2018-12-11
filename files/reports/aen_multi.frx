@@ -74,67 +74,264 @@
                <td>{startlon}</td>
                <td>{endlon}</td>
            </tr>
-           </tbody>
-       </table>
-       <p><b>Gear type</b> (e.g. CTD or part of type)</p>
-       <p>{geartype}</p>
-       <p><b>Sample type </b>(e.g. Zooplankton or part of type)</p>
-       <p>{sampletype}</p>
-       <p><b>Parent event ID</b></p>
-       <p>{parenteventid}</p>
-  <p>{submit}</p>
-  </div>
-  <p>Columns can be sorted by clicking the column header.</p>
-  <script type="text/javascript">
-var myUrl = "{site.base_url}"+"/cgi-bin/export_search.cgi?{site.language.name}&amp;startdate={parm.startdate}&amp;enddate={parm.enddate}&amp;geartype={parm.geartype}&amp;sampletype={parm.sampletype}&amp;cruisenumber={parm.cruisenumber}&amp;parenteventid={parm.parenteventid}&amp;startlat={parm.startlat}&amp;startlon={parm.startlon}&amp;endlat={parm.endlat}&amp;endlon={parm.endlon}";
-function addQSParm(name, value) {
-    var re = new RegExp("([?&amp;]" + name + "=)[^&amp;]+", "");
-    function add(sep) {
-        myUrl += sep + name + "=" + encodeURIComponent(value);
+           <tr>
+               <tr>
+               <td></td>
+               <td>Select approxemate area by holding down CTRL key (Meta key on Mac).
+
+
+               Red area shows area for returned search.</td>
+           </tr>
+                <td>
+                   <p><b>Gear type</b> (e.g. CTD or part of type)</p>
+                   <p>{geartype}</p>
+                   <p><b>Sample type </b>(e.g. Zooplankton or part of type)</p>
+                   <p>{sampletype}</p>
+                   <p><b>Parent event ID</b></p>
+                   <p>{parenteventid}</p>
+               </td>
+               <td id="map" class="map">
+               </td>
+           </tr>
+       </tbody>
+   </table>
+   <p>{submit}</p>
+   </div>
+   <script type="text/javascript">
+       var myUrl = "{site.base_url}"+"/cgi-bin/export_search.cgi?{site.language.name}&amp;startdate={parm.startdate}&amp;enddate={parm.enddate}&amp;geartype={parm.geartype}&amp;sampletype={parm.sampletype}&amp;cruisenumber={parm.cruisenumber}&amp;parenteventid={parm.parenteventid}&amp;startlat={parm.startlat}&amp;startlon={parm.startlon}&amp;endlat={parm.endlat}&amp;endlon={parm.endlon}";
+       function addQSParm(name, value) {
+       var re = new RegExp("([?&amp;]" + name + "=)[^&amp;]+", "");
+       function add(sep) {
+       myUrl += sep + name + "=" + encodeURIComponent(value);
+       };
+
+       function change() {
+       myUrl = myUrl.replace(re, "$1" + encodeURIComponent(value));
+       };
+       if (myUrl.indexOf("?") === -1) {
+       add("?");
+       } else {
+       if (re.test(myUrl)) {
+       change();
+       } else {
+       add("&amp;");
+       };
+       };
+       };
+
+       var values = Array.prototype.slice.call(document.querySelectorAll('#edit-params-stationname option:checked'),0).map(function(v,i,a) {
+       return v.value;
+       });
+
+       var stat_array = values.join('|');
+       addQSParm("stationname",stat_array);
+       var text = "Get full information from the search as a CSV file";
+       document.write('<a href="'+myUrl+'">'+text+'</a>')
+
+
+
+   proj4.defs('EPSG:3413','+proj=stere +lat_0=90 +lat_ts=70 +lon_0=-45 +k=1 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs')
+   ol.proj.proj4.register(proj4);
+   var proj3413 = new ol.proj.get('EPSG:3413');
+   proj3413.setExtent([-4194304, -4194304, 4194304, 4194304]);
+   var map = new ol.Map({
+       target: 'map',
+       layers: [
+           new ol.layer.Tile({
+               source: new ol.source.TileWMS({
+                   attributions: 'Imagery reproduced from the GEBCO_2014 Grid, version 20150318, <a href="https://www.gebco.net">www.gebco.net</a>',
+                   params: {
+                       'LAYERS' : 'GEBCO_NORTH_POLAR_VIEW'},
+                   projection: 'EPSG:3413',
+                   url: 'https://www.gebco.net/data_and_products/gebco_web_services/north_polar_view_wms/mapserv?'
+                   })
+               })
+           ],
+       view: new ol.View({
+       center: ol.proj.fromLonLat([30, 81], proj3413),
+       projection: proj3413,
+       zoom: 4,
+       rotation: 1.20
+       })
+   });
+
+     // a DragBox interaction used to select features by drawing boxes
+      var dragBox = new ol.interaction.DragBox({
+        condition: ol.events.condition.platformModifierKeyOnly 
+      });
+  // Do not use single line curly bracket arguments as forena replaces them
+        var source = new ol.source.Vector();
+      var vector = new ol.layer.Vector({
+          source:source
+      });
+      map.addLayer(vector);
+
+
+
+      dragBox.on('boxend', function(evt) {
+        // features that intersect the box are added to the collection of
+        // selected features
+        var startlon = document.getElementById('edit-params-startlon');
+        var startlat = document.getElementById('edit-params-startlat');
+        var endlon = document.getElementById('edit-params-endlon');
+        var endlat = document.getElementById('edit-params-endlat');
+
+        var coords  = dragBox.getGeometry().getCoordinates();
+        var lons = [];
+        var lats = [];
+        coords=coords[0];
+         // can not use for loops in forena 
+        var i = 0
+        coords[i] = ol.proj.toLonLat(coords[i],proj3413);
+        lons[i] = coords[i][0];
+        lats[i] = coords[i][1];
+        i = 1
+        coords[i] = ol.proj.toLonLat(coords[i],proj3413);
+        lons[i] = coords[i][0];
+        lats[i] = coords[i][1];
+        i = 2
+        coords[i] = ol.proj.toLonLat(coords[i],proj3413);
+        lons[i] = coords[i][0];
+        lats[i] = coords[i][1];
+        i = 3
+        coords[i] = ol.proj.toLonLat(coords[i],proj3413);
+        lons[i] = coords[i][0];
+        lats[i] = coords[i][1];
+        i = 4
+        coords[i] = ol.proj.toLonLat(coords[i],proj3413);
+        lons[i] = coords[i][0];
+        lats[i] = coords[i][1];
+
+
+        startlon.value = Math.min.apply(null,lons);
+        endlon.value = Math.max.apply(null,lons);
+
+        startlat.value = Math.min.apply(null,lats);
+        endlat.value = Math.max.apply(null,lats);
+
+        var geom = dragBox.getGeometry();
+        var feat = new ol.Feature({ 
+            geometry: geom
+        });
+
+        feat.setStyle(
+            new ol.style.Style({
+                stroke: new ol.style.Stroke({
+                color: 'blue',
+                width: 2
+              }),
+              fill: new ol.style.Fill({
+                color: 'rgba(0, 0, 255, 0.1)'
+              })
+            }) 
+        );
+        source.addFeature(feat);
+
+        
+      });
+    
+    if ( {parm.startlat} ) {
+        var rectangle =  [ ol.proj.fromLonLat([ {parm.startlon}, {parm.startlat} ],proj3413),
+                        ol.proj.fromLonLat([{parm.endlon}, {parm.startlat} ],proj3413),
+                        ol.proj.fromLonLat([{parm.endlon}, {parm.endlat} ],proj3413),
+                        ol.proj.fromLonLat([{parm.startlon}, {parm.endlat} ],proj3413),
+                        ol.proj.fromLonLat([{parm.startlon}, {parm.startlat} ],proj3413)
+                        ];
+      var polygon = new ol.geom.Polygon([ rectangle ])  ;
+      var square = new ol.Feature( polygon);
+
+      square.setStyle(
+            new ol.style.Style({
+                stroke: new ol.style.Stroke({
+                color: 'red',
+                width: 2
+              }),
+              fill: new ol.style.Fill({
+                color: 'rgba(255, 0, 0, 0.1)'
+              })
+            }) 
+        );
+    // Create vector source and the feature to it.
+    var vectorSource = new ol.source.Vector();
+    vectorSource.addFeature(square);
+
+    // Create vector layer attached to the vector source.
+    var vectorLayer = new ol.layer.Vector({
+      source: vectorSource
+    });
+
+    // Add the vector layer to the map.
+    map.addLayer(vectorLayer);
     };
 
-    function change() {
-        myUrl = myUrl.replace(re, "$1" + encodeURIComponent(value));
-    };
-    if (myUrl.indexOf("?") === -1) {
-        add("?");
-    } else {
-        if (re.test(myUrl)) {
-            change();
-        } else {
-            add("&amp;");
-        };
-    };
-};
 
-var values = Array.prototype.slice.call(document.querySelectorAll('#edit-params-stationname option:checked'),0).map(function(v,i,a) {
-    return v.value;
-});
+      //function makeBox(geom)
+      
+      map.addInteraction(dragBox);
 
-var stat_array = values.join('|');
-addQSParm("stationname",stat_array);
-var text = "Get full information from the search as a CSV file";
-document.write('<a href="'+myUrl+'">'+text+'</a>')
-</script>
-<div id="search_multi_block" class="FrxTable" frx:block="AeN/search_multi">
-    <table>
-      <thead>
-        <tr>
-          <th>Event Date</th>
-          <th>Station Name</th>
-          <th>Gear Type</th>
-          <th>Sample Type</th>
-          <th>Event ID</th>
-          <th>Parent Event ID</th></tr></thead>
-      <tbody>
-        <tr id="search_multi" frx:foreach="*">
-          <td>{eventdate}</td>
-          <td>{stationname}</td>
-          <td>{geartype}</td>
-          <td>{sampletype}</td>
-          <td>{eventid}</td>
-          <td>{parenteventid}</td></tr></tbody>
-</table>
+
+
+   </script>
+  <!--For plotting all the stations -->
+<div id="unique_stations_block" class="FrxTable FrxTable" frx:block="AeN/unique_stations" frx:foreach="*">    
+    <script type="text/javascript">
+        var marker = new ol.Feature({
+        name : '{sname}',
+        geometry: new ol.geom.Circle(
+        ol.proj.fromLonLat([{avglong}, {avglat}],'EPSG:3413'), 1000
+        )
+        });
+        marker.setStyle(
+        new ol.style.Style({
+            fill: new ol.style.Fill({
+                color: [255,148,148,1]
+                }),
+            stroke: new ol.style.Stroke({
+                color: [255,0,0,1],
+                width: 2
+                }),
+            text: new ol.style.Text({
+                textAlign: 'left',
+                textBaseline: 'bottom',
+                font: 'Halvetica',
+                text: '{sname}',
+                offsetX: 0,
+                offsetY: 0,
+                rotation: 0
+                })
+            })
+        );
+
+        var vectorSource = new ol.source.Vector({
+        features: [marker]
+        });
+        var markerVectorLayer = new ol.layer.Vector({
+        source: vectorSource
+        });
+        map.addLayer(markerVectorLayer);
+    </script>
 </div>
+
+   <p>Columns can be sorted by clicking the column header.</p>
+   <div id="search_multi_block" class="FrxTable" frx:block="AeN/search_multi">
+       <table>
+           <thead>
+               <tr>
+                   <th>Event Date</th>
+                   <th>Station Name</th>
+                   <th>Gear Type</th>
+                   <th>Sample Type</th>
+                   <th>Event ID</th>
+                   <th>Parent Event ID</th></tr></thead>
+           <tbody>
+               <tr id="search_multi" frx:foreach="*">
+                   <td>{eventdate}</td>
+                   <td>{stationname}</td>
+                   <td>{geartype}</td>
+                   <td>{sampletype}</td>
+                   <td>{eventid}</td>
+                   <td>{parenteventid}</td></tr></tbody>
+       </table>
+   </div>
 </body>
 </html>
