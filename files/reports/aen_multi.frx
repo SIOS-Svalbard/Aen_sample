@@ -228,7 +228,7 @@
         
       });
     
-    if ( {parm.startlat} ) {
+    if ( '{parm.startlat}' ) {
         var rectangle =  [ ol.proj.fromLonLat([ {parm.startlon}, {parm.startlat} ],proj3413),
                         ol.proj.fromLonLat([{parm.endlon}, {parm.startlat} ],proj3413),
                         ol.proj.fromLonLat([{parm.endlon}, {parm.endlat} ],proj3413),
