@@ -108,13 +108,23 @@ if method == "GET":  # This is for getting the page
         AND
         CASE when {startlon} is not NULL THEN decimallongitude between {startlon} AND  {endlon}
         ELSE TRUE
-        END'''.format(startdate = field(startdate),enddate=field(enddate),stationname=field(stationname),geartype=field(geartype),sampletype=field(sampletype),cruisenumber=field(cruisenumber),parenteventid=field(parenteventid),startlat=field(startlat),startlon=field(startlon),endlat=field(endlat),endlon=field(endlon))
+        END'''.format(startdate = field(startdate),enddate=field(enddate),stationname=field(stationname,True),geartype=field(geartype),sampletype=field(sampletype),cruisenumber=field(cruisenumber),parenteventid=field(parenteventid),startlat=field(startlat),startlon=field(startlon),endlat=field(endlat),endlon=field(endlon))
 
 
-    def field(f):
+    def field(f,arr=False):
         if f==None:
             return 'NULL'
-        else:
+        elif arr:
+            tmp = 'array['
+            for ii,el in enumerate(f):
+                if ii!=0:
+                    tmp=tmp+",'"+str(el)+"'"
+                else:
+                    
+                    tmp=tmp+"'"+str(el)+"'"
+            tmp = tmp+']'
+            return tmp
+        else: 
             return "'" + str(f) + "'"
 
     def get_fields(columns):
