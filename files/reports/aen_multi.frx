@@ -97,7 +97,9 @@
    </table>
    <p>{submit}</p>
    </div>
-   <a id='export_csv' href=''>Get full information from the search as a CSV file</a>
+   <h3>
+   <a id='export_csv' href=''>Get full information from the search as a tab separated file</a>
+   </h3>
    <script type="text/javascript">
        var myUrl = "{site.base_url}"+"/cgi-bin/export_search.cgi?{site.language.name}&amp;startdate={parm.startdate}&amp;enddate={parm.enddate}&amp;geartype={parm.geartype}&amp;sampletype={parm.sampletype}&amp;cruisenumber={parm.cruisenumber}&amp;parenteventid={parm.parenteventid}&amp;startlat={parm.startlat}&amp;startlon={parm.startlon}&amp;endlat={parm.endlat}&amp;endlon={parm.endlon}";
        function addQSParm(name, value) {

@@ -49,7 +49,7 @@ columns = ["eventID",
 __updated__ = '2018-11-28'
 
 
-# cgitb.enable()
+cgitb.enable()
 
 method = os.environ.get("REQUEST_METHOD", "GET")
 if method == "GET":  # This is for getting the page
@@ -74,7 +74,6 @@ if method == "GET":  # This is for getting the page
             else:
                 filters[key]=form[key].value
     
-    #sys.stdout.buffer.write(b"Content-Type: text/html\n\n")
 
     def get_filter(startdate =None,enddate=None,stationname=None,geartype=None,sampletype=None,cruisenumber=None,parenteventid=None,startlat=None,startlon=None,endlat=None,endlon=None):
         return ''' 
@@ -152,19 +151,16 @@ if method == "GET":  # This is for getting the page
     other_str = ','.join(other_str)
 
     print("Content-Type: text/csv")
-    print("Content-Disposition: attachment; filename=AeN_sample_database_export.csv\n")
+    print("Content-Disposition: attachment; filename=AeN_sample_database_export.tsv\n")
+    #sys.stdout.buffer.write(b"Content-Type: text/html\n\n")
 
     sys.stdout.flush()
 
-    # Using sys, as print doesn't work for cgi in python3
-    full_query = 'COPY (SELECT ' + get_fields(columns) + ',' + other_str + 'from aen where ' + filter_query +") TO STDOUT CSV HEADER"
+    # Setting export to tab separated such that Excel likes it better
+    full_query = 'COPY (SELECT ' + get_fields(columns) + ',' + other_str + 'from aen where ' + filter_query +") TO STDOUT CSV HEADER DELIMITER '\t' "
+
+    
     cur.copy_expert(full_query,sys.stdout.buffer)
-   
-
-
-    #with open(path, "rb") as f:
-        #sys.stdout.flush()
-        #shutil.copyfileobj(f, sys.stdout.buffer)
 
     cur.close()
     conn.close()
