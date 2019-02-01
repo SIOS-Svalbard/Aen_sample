@@ -1,0 +1,4 @@
+numpy
+Pillow
+psycopg2
+pylibdmtx
