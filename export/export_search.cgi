@@ -150,7 +150,7 @@ if method == "GET":  # This is for getting the page
 
     other_str = ','.join(other_str)
 
-    print("Content-Type: text/csv")
+    print("Content-Type: text/tsv")
     print("Content-Disposition: attachment; filename=AeN_sample_database_export.tsv\n")
     #sys.stdout.buffer.write(b"Content-Type: text/html\n\n")
 
