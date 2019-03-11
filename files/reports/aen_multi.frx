@@ -4,7 +4,7 @@
 ]>
 <html xmlns:frx="urn:FrxReports">
 <head>
-<title>Nansen Legacy filter samples</title>
+<title>Nansen Legacy sample search</title>
 <frx:category>Aen</frx:category>
 <frx:options input_format="full_html" skin="datatable"/>
 <frx:parameters>
