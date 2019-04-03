@@ -69,7 +69,7 @@ filters = {"startdate" :'2018-01-01',
 # set the filters
 for key in filters.keys():
     if key in form and form[key].value!='':
-        if key=='stationname':
+        if key=='stationname' or key == 'sampletype' or key=='geartype':
             filters[key]=(form[key].value).split('|')
         elif key=='eventids':
             tmp = (form[key].value).replace(' ','')
@@ -81,49 +81,58 @@ for key in filters.keys():
 
 def get_filter(startdate =None,enddate=None,stationname=None,geartype=None,sampletype=None,cruisenumber=None,parenteventid=None,startlat=None,startlon=None,endlat=None,endlon=None,eventids=None):
     return ''' 
-    CASE when {startdate} is not NULL THEN eventdate between {startdate} AND  {enddate}
-    ELSE TRUE
-    END
+        CASE when {startdate} is not NULL 
+            THEN eventdate between {startdate} AND  {enddate}
+        ELSE TRUE
+        END
     AND
-        CASE when ({stationname}) is not NULL or {stationname} is not NULL 
+        CASE when array_length({stationname},1) > 0
             THEN stationname = ANY({stationname})
         ELSE TRUE
         END
     AND
-        CASE when {geartype} is not NULL THEN geartype ILIKE concat('%',{geartype}, '%')
+        CASE when array_length({geartype},1) > 0
+            THEN geartype = ANY({geartype})
         ELSE TRUE
         END
     AND
-        CASE when {sampletype} is not NULL THEN sampletype ILIKE concat('%',{sampletype},'%')
+        CASE when array_length({sampletype},1) > 0
+            THEN sampletype = ANY({sampletype})
         ELSE TRUE
         END
     AND
-        CASE when {cruisenumber} is not NULL THEN cast(cruisenumber as text) LIKE {cruisenumber}
+        CASE when {cruisenumber} is not NULL 
+            THEN cast(cruisenumber as text) LIKE {cruisenumber}
         ELSE TRUE
         END
     AND
-        CASE when {parenteventid} is not NULL THEN cast(parenteventid as text) LIKE {parenteventid}
+        CASE when {parenteventid} is not NULL 
+            THEN cast(parenteventid as text) LIKE {parenteventid}
         ELSE TRUE
         END
     AND
-        CASE when {startlat} is not NULL THEN decimallatitude between {startlat} AND  {endlat}
+        CASE when {startlat} is not NULL 
+            THEN decimallatitude between {startlat} AND  {endlat}
         ELSE TRUE
         END
     AND
-        CASE when {startlon} is not NULL THEN decimallongitude between {startlon} AND  {endlon}
+        CASE when {startlon} is not NULL 
+            THEN decimallongitude between {startlon} AND  {endlon}
         ELSE TRUE
         END
     AND
-        CASE when ({eventids}) is not NULL or {eventids} is not NULL 
+        CASE when array_length({eventids},1) > 0
             THEN eventid in (select cast( unnest({eventids}) as uuid))
         ELSE TRUE
         END
-    '''.format(startdate = field(startdate),enddate=field(enddate),stationname=field(stationname,True),geartype=field(geartype),sampletype=field(sampletype),cruisenumber=field(cruisenumber),parenteventid=field(parenteventid),startlat=field(startlat),startlon=field(startlon),endlat=field(endlat),endlon=field(endlon),eventids=field(eventids,True))
+    '''.format(startdate = field(startdate),enddate=field(enddate),stationname=field(stationname,True),geartype=field(geartype,True),sampletype=field(sampletype,True),cruisenumber=field(cruisenumber),parenteventid=field(parenteventid),startlat=field(startlat),startlon=field(startlon),endlat=field(endlat),endlon=field(endlon),eventids=field(eventids,True))
 
 
 def field(f,arr=False):
-    if f==None:
+    if f==None and not(arr):
         return 'NULL'
+    elif f==None and arr:
+        return 'ARRAY[]::text[]'
     elif arr:
         tmp = 'array['
         for ii,el in enumerate(f):

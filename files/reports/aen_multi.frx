@@ -10,9 +10,9 @@
 <frx:parameters>
   <frx:parm id="startdate" label="Start date" type="date_select" options="date_year_range='-10:0'">today</frx:parm>
   <frx:parm id="enddate" label="End Date" type="date_select" options="date_year_range='-10:0'">today</frx:parm>
-  <frx:parm id="stationname" label="Station Name (hold ctrl for multi)" desc="The name of the station" data_source="AeN/unique_stations" data_field="stationname" label_field="stationname" type="multiselect"/>
-  <frx:parm id="geartype" desc="CTD (can be part of type)" label="Gear Type"/>
-  <frx:parm id="sampletype" desc="Zooplankton (can be part of type)" label="Sample Type"/>
+  <frx:parm id="stationname" label="Station Name (hold ctrl to select multiple)" desc="The name of the station" data_source="AeN/unique_stations" data_field="stationname" label_field="stationname" type="multiselect"/>
+  <frx:parm id="geartype" desc="The type of gear" label="Gear Type (hold ctrl to select multiple)" data_source="AeN/unique_gear" data_field="geartype" label_field="geartype" type="multiselect"/>
+  <frx:parm id="sampletype" desc="The type of sample" label="Sample Type (hold ctrl to select multiple)" data_source="AeN/unique_sample" data_field="sampletype" label_field="sampletype" type="multiselect"/>
   <frx:parm id="cruisenumber" label="Cruise Number" data_source="AeN/unique_cruise" data_field="cruisenumber" type="select"/>
   <frx:parm id="parenteventid" label="Parent Event ID"/>
   <frx:parm id="startlat" label="Start latitude"/>
@@ -83,9 +83,9 @@
                Red area shows area for returned search.</td>
            </tr>
                 <td>
-                   <p><b>Gear type</b> (e.g. CTD or part of type)</p>
+                   <p><b>Gear type</b> (hold CTRL to select multiple)</p>
                    <p>{geartype}</p>
-                   <p><b>Sample type </b>(e.g. Zooplankton or part of type)</p>
+                   <p><b>Sample type </b>(hold CTRL to select multiple)</p>
                    <p>{sampletype}</p>
                    <p><b>Parent event ID</b></p>
                    <p>{parenteventid}</p>
@@ -97,38 +97,33 @@
    </table>
    <p>{submit}</p>
    </div>
-   <h3>
-   <a id='export_csv' href=''>Get full information from the search as a tab separated file</a>
-   </h3>
+   <form id="export" action="{site.base_url}/cgi-bin/export_search.cgi" target="_blank" method="post">
+   <input type="hidden" id="input_startdate" name="startdate" value="{parm.startdate}" /> <input type="hidden" id="input_enddate" name="enddate" value="{parm.enddate}" /> <input type="hidden" id="input_cruisenumber" name="cruisenumber" value="{parm.cruisenumber}" /> <input type="hidden" id="input_parenteventid" name="parenteventid" value="{parm.parenteventid}" /> <input type="hidden" id="input_startlat" name="startlat" value="{parm.startlat}" /> <input type="hidden" id="input_endlat" name="endlat" value="{parm.endlat}" /> <input type="hidden" id="input_startlon" name="startlon" value="{parm.startlon}" /> <input type="hidden" id="input_endlon" name="endlon" value="{parm.endlon}" /> <input type="hidden" id="input_stationname" name="stationname" value="" /> <input type="hidden" id="input_geartype" name="geartype" value="" /> <input type="hidden" id="input_sampletype" name="sampletype" value="" /> <!-- Needs to be on one line, such that <br> is not inserted-->
+       <input type="submit" value="Get full information of the result as a tab separated file" />
+    </form>
+   <!--<h3>-->
+   <!--<a id='export_csv' href=''>Get full information from the search as a tab separated file</a>-->
+   <!--</h3>-->
    <script type="text/javascript">
-       var myUrl = "{site.base_url}"+"/cgi-bin/export_search.cgi?{site.language.name}&amp;startdate={parm.startdate}&amp;enddate={parm.enddate}&amp;geartype={parm.geartype}&amp;sampletype={parm.sampletype}&amp;cruisenumber={parm.cruisenumber}&amp;parenteventid={parm.parenteventid}&amp;startlat={parm.startlat}&amp;startlon={parm.startlon}&amp;endlat={parm.endlat}&amp;endlon={parm.endlon}";
-       function addQSParm(name, value) {
-       var re = new RegExp("([?&amp;]" + name + "=)[^&amp;]+", "");
-       function add(sep) {
-       myUrl += sep + name + "=" + encodeURIComponent(value);
-       };
 
-       function change() {
-       myUrl = myUrl.replace(re, "$1" + encodeURIComponent(value));
-       };
-       if (myUrl.indexOf("?") === -1) {
-       add("?");
-       } else {
-       if (re.test(myUrl)) {
-       change();
-       } else {
-       add("&amp;");
-       };
-       };
-       };
-
-       var values = Array.prototype.slice.call(document.querySelectorAll('#edit-params-stationname option:checked'),0).map(function(v,i,a) {
+       var stat_values = Array.prototype.slice.call(document.querySelectorAll('#edit-params-stationname option:checked'),0).map(function(v,i,a) {
        return v.value;
        });
 
-       var stat_array = values.join('|');
-       addQSParm("stationname",stat_array);
-       document.getElementById('export_csv').href=myUrl;
+       var gear_values = Array.prototype.slice.call(document.querySelectorAll('#edit-params-geartype option:checked'),0).map(function(v,i,a) {
+       return v.value;
+       });
+
+       var sample_values = Array.prototype.slice.call(document.querySelectorAll('#edit-params-sampletype option:checked'),0).map(function(v,i,a) {
+       return v.value;
+       });
+
+       var stat_array = stat_values.join('|');
+       document.getElementById('input_stationname').value=stat_array;
+       var gear_array = gear_values.join('|');
+       document.getElementById('input_geartype').value=gear_array;
+       var sample_array = sample_values.join('|');
+       document.getElementById('input_sampletype').value=sample_array;
 
    proj4.defs('EPSG:3413','+proj=stere +lat_0=90 +lat_ts=70 +lon_0=-45 +k=1 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs')
    ol.proj.proj4.register(proj4);
