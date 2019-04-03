@@ -3,7 +3,7 @@
 
 
 '''
- -- Web interface for exproting a Postgresql search.
+ -- Web interface for exporting a Postgresql search.
 
 
 @author:     Pål Ellingsen
@@ -46,121 +46,132 @@ columns = ["eventID",
            "history",
            "source"]
 
-__updated__ = '2018-11-28'
+__updated__ = '2019-04-03'
 
 
-cgitb.enable()
+#sys.stdout.buffer.write(b"Content-Type: text/html\n\n")
+#cgitb.enable()
 
-method = os.environ.get("REQUEST_METHOD", "GET")
-if method == "GET":  # This is for getting the page
-    form = cgi.FieldStorage()
+form = cgi.FieldStorage()
 
-    filters = {"startdate" :'2018-01-01',
-            "enddate":dt.date.today().isoformat(),
-            "stationname":None,
-            "geartype":None,
-            "sampletype":None,
-            "cruisenumber": None,
-            "parenteventid":None,
-            "startlat":None,
-            "startlon":None,
-            "endlat":None,
-            "endlon":None}
-    # set the filters
-    for key in filters.keys():
-        if key in form and form[key].value!='':
-            if key=='stationname':
-                filters[key]=(form[key].value).split('|')
-            else:
-                filters[key]=form[key].value
-    
+filters = {"startdate" :'2018-01-01',
+        "enddate":dt.date.today().isoformat(),
+        "stationname":None,
+        "geartype":None,
+        "sampletype":None,
+        "cruisenumber": None,
+        "parenteventid":None,
+        "startlat":None,
+        "startlon":None,
+        "endlat":None,
+        "endlon":None,
+        "eventids":None}
+# set the filters
+for key in filters.keys():
+    if key in form and form[key].value!='':
+        if key=='stationname':
+            filters[key]=(form[key].value).split('|')
+        elif key=='eventids':
+            tmp = (form[key].value).replace(' ','')
+            filters[key]= list(map(''.join, zip(*[iter(tmp)]*36))) # split the string into uuid strings
+        else:
+            filters[key]=form[key].value
+        #print(filters[key])
 
-    def get_filter(startdate =None,enddate=None,stationname=None,geartype=None,sampletype=None,cruisenumber=None,parenteventid=None,startlat=None,startlon=None,endlat=None,endlon=None):
-        return ''' 
-        CASE when {startdate} is not NULL THEN eventdate between {startdate} AND  {enddate}
+
+def get_filter(startdate =None,enddate=None,stationname=None,geartype=None,sampletype=None,cruisenumber=None,parenteventid=None,startlat=None,startlon=None,endlat=None,endlon=None,eventids=None):
+    return ''' 
+    CASE when {startdate} is not NULL THEN eventdate between {startdate} AND  {enddate}
+    ELSE TRUE
+    END
+    AND
+        CASE when ({stationname}) is not NULL or {stationname} is not NULL 
+            THEN stationname = ANY({stationname})
         ELSE TRUE
         END
-        AND
-            CASE when ({stationname}) is not NULL THEN stationname = ANY({stationname})
-        ELSE TRUE
-        END
-        AND
+    AND
         CASE when {geartype} is not NULL THEN geartype ILIKE concat('%',{geartype}, '%')
         ELSE TRUE
         END
-        AND
+    AND
         CASE when {sampletype} is not NULL THEN sampletype ILIKE concat('%',{sampletype},'%')
         ELSE TRUE
         END
-        AND
+    AND
         CASE when {cruisenumber} is not NULL THEN cast(cruisenumber as text) LIKE {cruisenumber}
         ELSE TRUE
         END
-        AND
+    AND
         CASE when {parenteventid} is not NULL THEN cast(parenteventid as text) LIKE {parenteventid}
         ELSE TRUE
         END
-        AND
+    AND
         CASE when {startlat} is not NULL THEN decimallatitude between {startlat} AND  {endlat}
         ELSE TRUE
         END
-        AND
+    AND
         CASE when {startlon} is not NULL THEN decimallongitude between {startlon} AND  {endlon}
         ELSE TRUE
-        END'''.format(startdate = field(startdate),enddate=field(enddate),stationname=field(stationname,True),geartype=field(geartype),sampletype=field(sampletype),cruisenumber=field(cruisenumber),parenteventid=field(parenteventid),startlat=field(startlat),startlon=field(startlon),endlat=field(endlat),endlon=field(endlon))
+        END
+    AND
+        CASE when ({eventids}) is not NULL or {eventids} is not NULL 
+            THEN eventid in (select cast( unnest({eventids}) as uuid))
+        ELSE TRUE
+        END
+    '''.format(startdate = field(startdate),enddate=field(enddate),stationname=field(stationname,True),geartype=field(geartype),sampletype=field(sampletype),cruisenumber=field(cruisenumber),parenteventid=field(parenteventid),startlat=field(startlat),startlon=field(startlon),endlat=field(endlat),endlon=field(endlon),eventids=field(eventids,True))
 
 
-    def field(f,arr=False):
-        if f==None:
-            return 'NULL'
-        elif arr:
-            tmp = 'array['
-            for ii,el in enumerate(f):
-                if ii!=0:
-                    tmp=tmp+",'"+str(el)+"'"
-                else:
-                    
-                    tmp=tmp+"'"+str(el)+"'"
-            tmp = tmp+']'
-            return tmp
-        else: 
-            return "'" + str(f) + "'"
+def field(f,arr=False):
+    if f==None:
+        return 'NULL'
+    elif arr:
+        tmp = 'array['
+        for ii,el in enumerate(f):
+            if ii!=0:
+                tmp=tmp+",'"+str(el)+"'"
+            else:
+                
+                tmp=tmp+"'"+str(el)+"'"
+        tmp = tmp+']'
+        return tmp
+    else: 
+        return "'" + str(f) + "'"
 
-    def get_fields(columns):
-        temp = [] 
-        for c in columns:
-            temp.append(c+' AS "'+c+'"')
-        return ','.join(temp)
+def get_fields(columns):
+    temp = [] 
+    for c in columns:
+        temp.append(c+' AS "'+c+'"')
+    return ','.join(temp)
 
-    # Open connection to database
-    conn = psycopg2.connect("dbname=test user=www")
-    conn.set_session(readonly=True)
-    cur = conn.cursor()
+# Open connection to database
+conn = psycopg2.connect("dbname=aen_db user=aen_user")
+conn.set_session(readonly=True)
+cur = conn.cursor()
 
-    filter_query = get_filter(**filters)
-    #print(filter_query)
+filter_query = get_filter(**filters)
+#print(filter_query)
 
-    cur.execute('SELECT distinct((each(other)).key) from aen where '+ filter_query)
-    other_fields= cur.fetchall()
+cur.execute('SELECT distinct((each(other)).key) from aen where '+ filter_query)
+other_fields= cur.fetchall()
 
-    other_str = []
+other_str = []
 
-    for o in other_fields:
-        other_str.append("other->'" + o[0] + "' AS"+' "' + o[0] + '"')
+for o in other_fields:
+    other_str.append("other->'" + o[0] + "' AS"+' "' + o[0] + '"')
 
-    other_str = ','.join(other_str)
+other_str = ','.join(other_str)
 
-    print("Content-Type: text/tsv")
-    print("Content-Disposition: attachment; filename=AeN_sample_database_export.tsv\n")
-    #sys.stdout.buffer.write(b"Content-Type: text/html\n\n")
+print("Content-Type: text/tsv")
+print("Content-Disposition: attachment; filename=AeN_sample_database_export.tsv\n")
+#sys.stdout.buffer.write(b"Content-Type: text/html\n\n")
 
-    sys.stdout.flush()
+sys.stdout.flush()
 
-    # Setting export to tab separated such that Excel likes it better
-    full_query = 'COPY (SELECT ' + get_fields(columns) + ',' + other_str + 'from aen where ' + filter_query +") TO STDOUT CSV HEADER DELIMITER '\t' "
+# Setting export to tab separated such that Excel likes it better
+full_query = 'COPY (SELECT ' + get_fields(columns) + ',' + other_str + 'from aen where ' + filter_query +") TO STDOUT CSV HEADER DELIMITER '\t' "
 
-    
-    cur.copy_expert(full_query,sys.stdout.buffer)
 
-    cur.close()
-    conn.close()
+cur.copy_expert(full_query,sys.stdout.buffer)
+
+cur.close()
+conn.close()
