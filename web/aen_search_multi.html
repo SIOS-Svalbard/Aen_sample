@@ -1,35 +1,35 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<title>Nansen Legacy multiple eventIDs</title>
-</head>
-<body>
-    <form action="" target="_blank" method="post" id="forena-parameter-form" accept-charset="UTF-8">
-       <table>
-           <tbody>
-               <tr>
-                   <td><b>Event ids</b>  (separated by space). Can be copied in from Excel or read in using a scanner.</td>
-           </tr>
-               <tr>
-                   <td>
-                       <textarea id="textarea-eventids" name="eventids" rows="30" cols="37" style="white-space: pre-wrap;"> </textarea>
-</td>
-           </tr>
-       </tbody>
-   </table>
-   <p>
-   <input type="submit" id="submit" name="p" value="Search" class="form-submit">
-   </p>
-   <script type="text/javascript">
+    <head>
+        <title>Nansen Legacy multiple eventIDs</title>
+    </head>
+    <body>
+        <form action="" target="_blank" method="post" id="forena-parameter-form" accept-charset="UTF-8">
+            <table>
+                <tbody>
+                    <tr>
+                        <td><b>Event ids</b>  (separated by space). Can be copied in from Excel or read in using a scanner.</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <textarea id="textarea-eventids" name="eventids" rows="30" cols="37" style="white-space: pre-wrap;"> </textarea>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>
+            <input type="submit" id="submit" name="p" value="Search" class="form-submit">
+            </p>
+            <script type="text/javascript">
 
-       document.getElementById('forena-parameter-form').onclick = function addspace() {
-           var textarea = document.getElementById('textarea-eventids');
-           var revnl = textarea.value.replace(/\s{1,}/g," ");
-           textarea.value = revnl;
-           document.getElementById("forena-parameter-form").action = location+"?q=reports/multi_sample";
-           document.getElementById("forena-parameter-form").submit();
-       }
-   </script>
-    </form>
-</body>
+                document.getElementById('forena-parameter-form').onclick = function addspace() {
+                    var textarea = document.getElementById('textarea-eventids');
+                    var revnl = textarea.value.replace(/\s{1,}/g," ");
+                    textarea.value = revnl;
+                    document.getElementById("forena-parameter-form").action = location+"?q=reports/multi_sample";
+                    document.getElementById("forena-parameter-form").submit();
+                }
+            </script>
+        </form>
+    </body>
 </html>
