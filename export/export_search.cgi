@@ -177,7 +177,7 @@ print("Content-Disposition: attachment; filename=AeN_sample_database_export.tsv\
 sys.stdout.flush()
 
 # Setting export to tab separated such that Excel likes it better
-full_query = 'COPY (SELECT ' + get_fields(columns) + ',' + other_str + 'from aen where ' + filter_query +") TO STDOUT CSV HEADER DELIMITER '\t' "
+full_query = 'COPY (SELECT ' + get_fields(columns) + ',' + other_str + 'from aen where ' + filter_query +" ORDER BY eventdate, eventtime, sampletype, sampledepthinmeters ASC ) TO STDOUT CSV HEADER DELIMITER '\t' "
 
 
 cur.copy_expert(full_query,sys.stdout.buffer)
