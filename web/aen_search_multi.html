@@ -4,7 +4,7 @@
         <title>Nansen Legacy multiple eventIDs</title>
     </head>
     <body>
-        <form action="" target="_blank" method="post" id="forena-parameter-form" accept-charset="UTF-8">
+        <form action="?q=reports/multi_sample" target="_blank" method="post" id="forena-parameter-form" accept-charset="UTF-8">
             <table>
                 <tbody>
                     <tr>
@@ -26,7 +26,6 @@
                     var textarea = document.getElementById('textarea-eventids');
                     var revnl = textarea.value.replace(/\s{1,}/g," ");
                     textarea.value = revnl;
-                    document.getElementById("forena-parameter-form").action = location+"?q=reports/multi_sample";
                     document.getElementById("forena-parameter-form").submit();
                 }
             </script>
