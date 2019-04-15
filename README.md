@@ -9,3 +9,12 @@ This repository contains the web code for Forena (http://forenasolutions.org/) i
 These folders should be symlinked into the respective folders under the Forena page. 
 
 The export folder contains a script in Python 3 for exporting the postgresql search to a csv file. It requires cgi on the server.
+
+
+### License
+
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with this program.  If not, see <https://www.gnu.org/licenses/>.
