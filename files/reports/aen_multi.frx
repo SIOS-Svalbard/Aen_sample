@@ -83,10 +83,24 @@
                Red area shows area for returned search.</td>
            </tr>
                 <td>
-                   <p><b>Gear type</b> (hold CTRL to select multiple)</p>
-                   <p>{geartype}</p>
+                    <table>
+                    <tr>
+                    <td>
+                    <b>Gear type</b> (hold CTRL to select multiple)
+                    </td>
+                    <td>
                    <p><b>Sample type </b>(hold CTRL to select multiple)</p>
+                    </td>
+                    </tr>
+                    <tr>
+                    <td>
+                   <p>{geartype}</p>
+                    </td>
+                    <td>
                    <p>{sampletype}</p>
+                    </td>
+                    </tr>
+                    </table>
                    <p><b>Parent event ID</b></p>
                    <p>{parenteventid}</p>
                </td>

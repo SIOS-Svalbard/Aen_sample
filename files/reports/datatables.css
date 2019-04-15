@@ -67,7 +67,7 @@ table.dataTable thead .sorting_desc {
 }
 
 /*style the multiselect for station names*/
-.form-select[id="edit-params-stationname"] {
+.form-select{
   height: 70px;
 }
 .map {
