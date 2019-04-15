@@ -71,7 +71,7 @@ table.dataTable thead .sorting_desc {
   height: 70px
 }
 #edit-params-geartype, #edit-params-sampletype{
-  height: 80px;
+  height: 100px;
 }
 .map {
     height: 300px;

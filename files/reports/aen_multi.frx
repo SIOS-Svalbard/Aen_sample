@@ -76,7 +76,8 @@
            </tr>
            <tr>
                 <td>
-                    <table>
+                    <table style="font-size: 100% !important">
+                    <tbody>
                     <tr>
                     <td>
                     <b>Gear type</b> (hold CTRL to select multiple)
@@ -93,6 +94,7 @@
                    <p>{sampletype}</p>
                     </td>
                     </tr>
+                    </tbody>
                     </table>
                    <p><b>Parent event ID</b></p>
                    <p>{parenteventid}</p>
