@@ -75,13 +75,6 @@
                <td>{endlon}</td>
            </tr>
            <tr>
-               <tr>
-               <td></td>
-               <td>Select approximate area by holding down CTRL key (Meta key on Mac).
-
-
-               Red area shows area for returned search.</td>
-           </tr>
                 <td>
                     <table>
                     <tr>
@@ -105,6 +98,8 @@
                    <p>{parenteventid}</p>
                </td>
                <td id="map" class="map">
+               Select approximate area by holding down CTRL key (Meta key on Mac).
+               Red area shows area for returned search.
                </td>
            </tr>
        </tbody>
