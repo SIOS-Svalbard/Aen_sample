@@ -6,7 +6,7 @@
 <head>
 <title>Nansen Legacy multiple eventIDs</title>
 <frx:category>Aen</frx:category> 
-<frx:options input_format="unfiltered" skin="datatable"/>
+<frx:options input_format="full_html" skin="datatable"/>
 <frx:parameters>
   <frx:parm id="eventids" label="Event IDs (separated by space). Can be copied in from Excel" type="hidden"/>
 </frx:parameters>
